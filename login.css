@@ -1,0 +1,28 @@
+#loginform
+{	background-color:#fff;
+	opacity:0.6;
+	
+	padding-top:70px;
+	height:700px;
+	width:800px;
+	color:#000;
+}
+
+/*.back
+{		
+	  background:url("images/flight1.jpg");
+	  background-size:100% 100% ;
+	  background-repeat:no-repeat;
+	 
+	 
+	  
+}*/
+
+.fullscreen {
+	background-repeat:no-repeat;
+	background-size:100% 100%;
+   
+}
+.padding-top-10{
+	padding-top:10px;
+}
