@@ -1,4 +1,6 @@
 <?php /*
+
+session_start();
 $uName = $_POST['uName'];
  
 $conn = mysqli_connect("localhost","root","","airlinefinal");
