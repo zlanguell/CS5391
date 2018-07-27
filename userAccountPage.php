@@ -39,13 +39,14 @@ mysql_close($conn);
 			array("Visa", "12345678901234", "11/20"));
 
 	echo "<tr>";
-										 /*<!-- User ID     -->*/
+					     /*<!-- User ID     -->*/
 	echo "<td>" . $accInfo[1] . "</td>"; /*<!-- Username    -->*/
 	echo "<td>" . $accInfo[2] . "</td>"; /*<!-- First Name  -->*/
 	echo "<td>" . $accInfo[3] . "</td>"; /*<!-- Midd Name   -->*/
 	echo "<td>" . $accInfo[4] . "</td>"; /*<!-- Last Name   -->*/
 	echo "<td>" . $accInfo[5] . "</td>"; /*<!-- Address     -->*/
 	echo "<td>" . $accInfo[6] . "</td>"; /*<!-- Email       -->*/
+					     /*<!-- CC Info     -->*/
 	echo "<td><a href=\"updateAccountInfo.php\">change</a></td>";
 	echo "</tr>";
 ?>
@@ -66,9 +67,9 @@ mysql_close($conn);
 $ccInfo = $accInfo[7];
 
 echo "<tr>";
-echo "<td>" . $ccInfo[0] . "</td>";
-echo "<td>" . $ccInfo[1] . "</td>";
-echo "<td>" . $ccInfo[2] . "</td>";
+echo "<td>" . $ccInfo[0] . "</td>";  /*<!-- CC Type     -->*/
+echo "<td>" . $ccInfo[1] . "</td>";  /*<!-- CC Num      -->*/
+echo "<td>" . $ccInfo[2] . "</td>";  /*<!-- CC Expr     -->*/
 echo "<td><a href=\"addRemoveCC.php\">add/remove</a></td>";
 echo "</tr>";
 ?>
@@ -100,7 +101,7 @@ echo "</tr>";
 	foreach($trips as $trip) {
 		echo "<tr>"; 
 		echo "<td>" . $trip[0] . "</td>"; /*<!-- Trip Number   -->*/
-										  /*<!-- User ID       -->*/
+						  /*<!-- User ID       -->*/
 		echo "<td>" . $trip[2] . "</td>"; /*<!-- Start Date    -->*/
 		echo "<td>" . $trip[3] . "</td>"; /*<!-- End Date      -->*/
 		echo "<td>" . $trip[4] . "</td>"; /*<!-- Flight Info   -->*/
