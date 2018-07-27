@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 28, 2018 at 12:39 AM
+-- Generation Time: Jul 28, 2018 at 01:04 AM
 -- Server version: 10.1.34-MariaDB
 -- PHP Version: 7.2.7
 
@@ -120,6 +120,7 @@ INSERT INTO `cabin_type` (`cabin_type_id`) VALUES
 
 CREATE TABLE `creditcard` (
   `creditcard` varchar(19) NOT NULL,
+  `creditcard_type` varchar(20) NOT NULL,
   `CVC` int(3) NOT NULL,
   `Exp_date` varchar(5) NOT NULL,
   `user_id` varchar(20) NOT NULL
@@ -129,8 +130,8 @@ CREATE TABLE `creditcard` (
 -- Dumping data for table `creditcard`
 --
 
-INSERT INTO `creditcard` (`creditcard`, `CVC`, `Exp_date`, `user_id`) VALUES
-('0000-0000-0000-0000', 111, '02/25', 'estewart');
+INSERT INTO `creditcard` (`creditcard`, `creditcard_type`, `CVC`, `Exp_date`, `user_id`) VALUES
+('0000-0000-0000-0000', 'visa', 111, '02/25', 'estewart');
 
 -- --------------------------------------------------------
 
@@ -200,25 +201,26 @@ CREATE TABLE `flights` (
   `dept_airport` varchar(3) NOT NULL,
   `arr_airport` varchar(3) NOT NULL,
   `distance` int(6) NOT NULL,
-  `airline_id` int(10) NOT NULL
+  `airline_id` int(10) NOT NULL,
+  `flight_status_id` varchar(20) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `flights`
 --
 
-INSERT INTO `flights` (`flight_id`, `flight_no`, `airbus_id`, `route_desc`, `dept_date`, `return_date`, `dept_time`, `return_dept_time`, `journey_hr`, `cabin_type`, `fare_dollars`, `fare_mileage`, `dept_airport`, `arr_airport`, `distance`, `airline_id`) VALUES
-(1, 251, 737, 'Non-stop from Austin to Houston. One Way.', '2018-08-23', NULL, '07:00:00', NULL, 1, 'economy', 250, 5000, 'AUS', 'IAH', 200, 1),
-(2, 554, 757, 'Non-Stop from Los Angeles to Honolulu. Roundtrip.', '2018-09-21', '2018-10-01', '12:00:00', '08:00:00', 10, 'economy', 600, 15000, 'LAX', 'HNL', 5098, 2),
-(3, 554, 757, 'Non-Stop from Los Angeles to Honolulu. Roundtrip.', '2018-09-21', '2018-10-01', '12:00:00', '08:00:00', 10, 'first', 1200, 30000, 'LAX', 'HNL', 5098, 2),
-(4, 655, 767, '1 Stop. Houston to Las Angeles to Honolulu. One Way.', '2018-10-19', NULL, '14:00:00', NULL, 12, 'economy', 900, 30000, 'IAH', 'HNL', 3950, 2),
-(5, 655, 767, '1 Stop. Houston to Las Angeles to Honolulu. One Way.', '2018-10-19', NULL, '14:00:00', NULL, 12, 'first', 1800, 60000, 'IAH', 'HNL', 3950, 2),
-(6, 234, 737, 'Non-stop Austin to Las Vegas. Roundtrip', '2018-08-30', '2018-09-02', '05:00:00', '12:00:00', 6, 'economy', 250, 5000, 'AUS', 'LAS', 2800, 3),
-(7, 236, 737, 'Nonstop. Las Vegas to Austin. One Way.', '2018-08-18', NULL, '15:06:00', NULL, 6, 'economy', 250, 5000, 'LAS', 'AUS', 1400, 3),
-(8, 661, 767, '1 Stop. Houston to Las Angeles to Honolulu. Round Trip.', '2018-10-19', '2018-10-25', '14:00:00', '09:00:00', 24, 'economy', 1500, 55000, 'IAH', 'HNL', 7900, 2),
-(9, 661, 767, '1 Stop. Houston to Las Angeles to Honolulu. Round Trip.', '2018-12-07', '2018-12-13', '09:00:00', '12:00:00', 24, 'economy', 1500, 55000, 'IAH', 'HNL', 7900, 2),
-(10, 231, 737, 'Nonstop. Las Vegas to Austin. Round Trip.', '2018-10-01', '2018-10-04', '15:06:00', '08:04:00', 6, 'economy', 500, 10000, 'LAS', 'AUS', 2800, 1),
-(11, 230, 737, 'Nonstop. Las Vegas to Austin. Round Trip.', '2018-11-12', '2018-11-15', '09:06:00', '17:04:00', 6, 'economy', 500, 10000, 'LAS', 'AUS', 2800, 4);
+INSERT INTO `flights` (`flight_id`, `flight_no`, `airbus_id`, `route_desc`, `dept_date`, `return_date`, `dept_time`, `return_dept_time`, `journey_hr`, `cabin_type`, `fare_dollars`, `fare_mileage`, `dept_airport`, `arr_airport`, `distance`, `airline_id`, `flight_status_id`) VALUES
+(1, 251, 737, 'Non-stop from Austin to Houston. One Way.', '2018-08-23', NULL, '07:00:00', NULL, 1, 'economy', 250, 5000, 'AUS', 'IAH', 200, 1, NULL),
+(2, 554, 757, 'Non-Stop from Los Angeles to Honolulu. Roundtrip.', '2018-09-21', '2018-10-01', '12:00:00', '08:00:00', 10, 'economy', 600, 15000, 'LAX', 'HNL', 5098, 2, NULL),
+(3, 554, 757, 'Non-Stop from Los Angeles to Honolulu. Roundtrip.', '2018-09-21', '2018-10-01', '12:00:00', '08:00:00', 10, 'first', 1200, 30000, 'LAX', 'HNL', 5098, 2, NULL),
+(4, 655, 767, '1 Stop. Houston to Las Angeles to Honolulu. One Way.', '2018-10-19', NULL, '14:00:00', NULL, 12, 'economy', 900, 30000, 'IAH', 'HNL', 3950, 2, NULL),
+(5, 655, 767, '1 Stop. Houston to Las Angeles to Honolulu. One Way.', '2018-10-19', NULL, '14:00:00', NULL, 12, 'first', 1800, 60000, 'IAH', 'HNL', 3950, 2, NULL),
+(6, 234, 737, 'Non-stop Austin to Las Vegas. Roundtrip', '2018-08-30', '2018-09-02', '05:00:00', '12:00:00', 6, 'economy', 250, 5000, 'AUS', 'LAS', 2800, 3, NULL),
+(7, 236, 737, 'Nonstop. Las Vegas to Austin. One Way.', '2018-08-18', NULL, '15:06:00', NULL, 6, 'economy', 250, 5000, 'LAS', 'AUS', 1400, 3, NULL),
+(8, 661, 767, '1 Stop. Houston to Las Angeles to Honolulu. Round Trip.', '2018-10-19', '2018-10-25', '14:00:00', '09:00:00', 24, 'economy', 1500, 55000, 'IAH', 'HNL', 7900, 2, NULL),
+(9, 661, 767, '1 Stop. Houston to Las Angeles to Honolulu. Round Trip.', '2018-12-07', '2018-12-13', '09:00:00', '12:00:00', 24, 'economy', 1500, 55000, 'IAH', 'HNL', 7900, 2, NULL),
+(10, 231, 737, 'Nonstop. Las Vegas to Austin. Round Trip.', '2018-10-01', '2018-10-04', '15:06:00', '08:04:00', 6, 'economy', 500, 10000, 'LAS', 'AUS', 2800, 1, NULL),
+(11, 230, 737, 'Nonstop. Las Vegas to Austin. Round Trip.', '2018-11-12', '2018-11-15', '09:06:00', '17:04:00', 6, 'economy', 500, 10000, 'LAS', 'AUS', 2800, 4, NULL);
 
 -- --------------------------------------------------------
 
@@ -238,6 +240,25 @@ CREATE TABLE `flight_booking` (
 
 INSERT INTO `flight_booking` (`fbook_id`, `flight_id`, `trans_id`) VALUES
 (1, 2, 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `flight_status`
+--
+
+CREATE TABLE `flight_status` (
+  `flight_status_id` varchar(20) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `flight_status`
+--
+
+INSERT INTO `flight_status` (`flight_status_id`) VALUES
+('arrived'),
+('delayed'),
+('in flight');
 
 -- --------------------------------------------------------
 
@@ -419,10 +440,12 @@ INSERT INTO `trips` (`trips_id`, `hbook_id`, `fbook_id`, `user_id`) VALUES
 
 CREATE TABLE `users` (
   `fname` text NOT NULL,
+  `mname` text,
   `lname` text NOT NULL,
   `user_id` varchar(10) NOT NULL,
   `email` varchar(30) NOT NULL,
   `phone` varchar(12) NOT NULL,
+  `address` varchar(50) NOT NULL,
   `mileage` int(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -430,8 +453,8 @@ CREATE TABLE `users` (
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`fname`, `lname`, `user_id`, `email`, `phone`, `mileage`) VALUES
-('Ethan', 'Stewart', 'estewart', 'estewart08@gmail.com', '512-999-9999', 0);
+INSERT INTO `users` (`fname`, `mname`, `lname`, `user_id`, `email`, `phone`, `address`, `mileage`) VALUES
+('Ethan', 'Middle', 'Stewart', 'estewart', 'estewart08@gmail.com', '512-999-9999', '123 Main St Austin, TX', 0);
 
 --
 -- Indexes for dumped tables
@@ -494,7 +517,8 @@ ALTER TABLE `flights`
   ADD KEY `depart_airport` (`dept_airport`),
   ADD KEY `arr_airport` (`arr_airport`),
   ADD KEY `airline_id` (`airline_id`),
-  ADD KEY `airbus_id` (`airbus_id`);
+  ADD KEY `airbus_id` (`airbus_id`),
+  ADD KEY `flight_status_id` (`flight_status_id`);
 
 --
 -- Indexes for table `flight_booking`
@@ -503,6 +527,12 @@ ALTER TABLE `flight_booking`
   ADD PRIMARY KEY (`fbook_id`),
   ADD KEY `flight_id` (`flight_id`),
   ADD KEY `trans_id` (`trans_id`);
+
+--
+-- Indexes for table `flight_status`
+--
+ALTER TABLE `flight_status`
+  ADD PRIMARY KEY (`flight_status_id`);
 
 --
 -- Indexes for table `flight_transacations`
@@ -676,7 +706,8 @@ ALTER TABLE `flights`
   ADD CONSTRAINT `flights_ibfk_2` FOREIGN KEY (`dept_airport`) REFERENCES `airport_detail` (`airport_id`),
   ADD CONSTRAINT `flights_ibfk_3` FOREIGN KEY (`arr_airport`) REFERENCES `airport_detail` (`airport_id`),
   ADD CONSTRAINT `flights_ibfk_4` FOREIGN KEY (`airline_id`) REFERENCES `airlines` (`airline_id`),
-  ADD CONSTRAINT `flights_ibfk_5` FOREIGN KEY (`airbus_id`) REFERENCES `airbus` (`airbus_id`);
+  ADD CONSTRAINT `flights_ibfk_5` FOREIGN KEY (`airbus_id`) REFERENCES `airbus` (`airbus_id`),
+  ADD CONSTRAINT `flights_ibfk_6` FOREIGN KEY (`flight_status_id`) REFERENCES `flight_status` (`flight_status_id`);
 
 --
 -- Constraints for table `flight_booking`
