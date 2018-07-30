@@ -1,42 +1,6 @@
 <?php
 include 'utility.php';
-/*
-  $string = "I am a PHP String!";
-  $output = array();
-   exec ("java HelloWorld $string", $output);
-   echo '<pre>';
-   foreach($output as $line){
-    echo ($line);
-  }
-  echo '</pre>';
 
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "survey_db_2018";
-
-// Create connection
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-// Check connection
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
-echo "Connected successfully";
-
-$sql = "SELECT * from flights";
-$result = $conn->query($sql);
-
- $row = $result->fetch_assoc();
- echo'<pre>';
- foreach ($row as $key => $value) {
-
-   echo $value . "\n";
- }
-
- echo'</pre>';
-  # code...
-  */
 ?>
 
 <html>
@@ -51,10 +15,10 @@ $result = $conn->query($sql);
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
   <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
   <link href="http://fonts.googleapis.com/css?family=Cookie" rel="stylesheet" type="text/css">
-  <link rel="stylesheet" href="./css/footer.css">
+  <link rel="stylesheet" href="css/footer.css">
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
-  <link rel="stylesheet" type="text/css" href="./css/header1.css">
-  <link rel="stylesheet" type="text/css" href="./css/login.css">
+  <link rel="stylesheet" type="text/css" href="css/header1.css">
+  <link rel="stylesheet" type="text/css" href="css/login.css">
 </head>
 <style>
 body {
@@ -63,27 +27,8 @@ body {
 
 }
 
-#header{
-  background:url("./images/h1.jpg");
-  font-size: 90px !important;
-  background-repeat: none;
-}
-
-#header h1{
-  font-size: 90px !important;
-  font-weight: 600;
-  font-family: 'Josefin Sans', sans-serif;
-  min-height: 200px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-#header .container{
-  line-height: 200px;
-}
-
 #background{
-    background: url(./images/vacation-web.jpg);
+    background: url(images/vacation-web.jpg);
     width: 100%;
     height: auto;
     background-size: cover;
@@ -107,14 +52,6 @@ body {
 .navbar{
   border-radius: 0px !important;
   margin-bottom: 0px;
-}
-
-.footer-distributed .footer-icons a{
-  padding-top: 8px;
-}
-
-.footer-distributed .footer-center i{
-  font-size: 18px;
 }
 
 .affix {
@@ -555,7 +492,7 @@ body {
                     <div class="col-md-2">
                       <div class="form-group">
                         <label>Price Range(High)</label>
-                          <input type="range" min="0" max="10000" value="50" step="100" class="high-slider" id="high">
+                          <input type="range" min="0" max="10000" value="100" step="100" class="high-slider" id="high">
                           <p>Value: <span id="high-range"></span></p>
                       </div>
                       <script>
@@ -583,6 +520,6 @@ body {
     </div>
   </div>
 </div>
-  <?php echo(get_footer());?>
+  <?php echo get_footer();?>
 </body>
 </html> 

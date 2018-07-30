@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.2
+-- version 4.7.9
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 28, 2018 at 01:04 AM
--- Server version: 10.1.34-MariaDB
--- PHP Version: 7.2.7
+-- Generation Time: Jul 29, 2018 at 03:44 AM
+-- Server version: 10.1.31-MariaDB
+-- PHP Version: 7.2.3
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -19,11 +19,10 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `auto_inc_test`
+-- Database: `survey_db_2018`
 --
 CREATE DATABASE IF NOT EXISTS `survey_db_2018` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
 USE `survey_db_2018`;
-
 -- --------------------------------------------------------
 
 --
@@ -131,7 +130,9 @@ CREATE TABLE `creditcard` (
 --
 
 INSERT INTO `creditcard` (`creditcard`, `creditcard_type`, `CVC`, `Exp_date`, `user_id`) VALUES
-('0000-0000-0000-0000', 'visa', 111, '02/25', 'estewart');
+('0000-0000-0000-0000', 'visa', 111, '02/25', 'estewart'),
+('4102356212365498', 'Mastercard', 123, '10/22', 'JKFen'),
+('5987066145623215', 'Visa', 321, '09/21', 'z_l24');
 
 -- --------------------------------------------------------
 
@@ -239,7 +240,10 @@ CREATE TABLE `flight_booking` (
 --
 
 INSERT INTO `flight_booking` (`fbook_id`, `flight_id`, `trans_id`) VALUES
-(1, 2, 1);
+(1, 2, 1),
+(2, 10, 2),
+(3, 1, 3),
+(4, 3, 4);
 
 -- --------------------------------------------------------
 
@@ -278,7 +282,10 @@ CREATE TABLE `flight_transacations` (
 --
 
 INSERT INTO `flight_transacations` (`trans_id`, `user_id`, `creditcard`, `amount`) VALUES
-(1, 'estewart', '0000-0000-0000-0000', 600);
+(1, 'estewart', '0000-0000-0000-0000', 600),
+(2, 'JKFen', '4102356212365498', 386),
+(3, 'z_l24', '5987066145623215', 278),
+(4, 'JKFen', '4102356212365498', 502);
 
 -- --------------------------------------------------------
 
@@ -341,15 +348,18 @@ CREATE TABLE `hotel_bookings` (
   `hbook_id` int(10) NOT NULL,
   `htrans_id` int(10) NOT NULL,
   `check_in` date NOT NULL,
-  `check_out` date NOT NULL
+  `check_out` date NOT NULL,
+  `hotel_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `hotel_bookings`
 --
 
-INSERT INTO `hotel_bookings` (`hbook_id`, `htrans_id`, `check_in`, `check_out`) VALUES
-(1, 1, '2018-09-21', '2018-09-29');
+INSERT INTO `hotel_bookings` (`hbook_id`, `htrans_id`, `check_in`, `check_out`, `hotel_id`) VALUES
+(1, 1, '2018-09-21', '2018-09-29', 1),
+(2, 3, '2018-10-01', '2018-10-04', 1),
+(3, 4, '2018-09-21', '2018-10-01', 7);
 
 -- --------------------------------------------------------
 
@@ -369,7 +379,10 @@ CREATE TABLE `hotel_transactions` (
 --
 
 INSERT INTO `hotel_transactions` (`htrans_id`, `user_id`, `creditcard`, `amount`) VALUES
-(1, 'estewart', '0000-0000-0000-0000', 200);
+(1, 'estewart', '0000-0000-0000-0000', 200),
+(2, 'z_l24', '5987066145623215', 222),
+(3, 'JKFen', '4102356212365498', 193),
+(4, 'JKFen', '4102356212365498', 412);
 
 -- --------------------------------------------------------
 
@@ -430,7 +443,10 @@ CREATE TABLE `trips` (
 --
 
 INSERT INTO `trips` (`trips_id`, `hbook_id`, `fbook_id`, `user_id`) VALUES
-(1, NULL, 1, 'estewart');
+(1, 1, 1, 'estewart'),
+(2, 2, 2, 'JKFen'),
+(3, 3, 4, 'JKFen'),
+(4, NULL, 3, 'z_l24');
 
 -- --------------------------------------------------------
 
@@ -454,7 +470,10 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`fname`, `mname`, `lname`, `user_id`, `email`, `phone`, `address`, `mileage`) VALUES
-('Ethan', 'Middle', 'Stewart', 'estewart', 'estewart08@gmail.com', '512-999-9999', '123 Main St Austin, TX', 0);
+('Ethan', 'Middle', 'Stewart', 'estewart', 'estewart08@gmail.com', '512-999-9999', '123 Main St Austin, TX', 0),
+('John', 'J', 'Doe', 'JJDoe', 'JJdoe@gmail.com', '123456789012', '169 Bourbon St  New Orleans, LA 12345', 750),
+('Jane', 'K', 'Fennedy', 'JKFen', 'jFen@gmail.com', '987654321098', '333 Walstreet NYC, NY 56789', 9000),
+('Zachary', 'P', 'Languell', 'z_l24', 'z_l24@txstate.edu', '555555555555', '123 Fake Street San Marcos, TX 78666', 3500);
 
 --
 -- Indexes for dumped tables
@@ -629,13 +648,13 @@ ALTER TABLE `flights`
 -- AUTO_INCREMENT for table `flight_booking`
 --
 ALTER TABLE `flight_booking`
-  MODIFY `fbook_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `fbook_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `flight_transacations`
 --
 ALTER TABLE `flight_transacations`
-  MODIFY `trans_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `trans_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `hotels`
@@ -653,13 +672,13 @@ ALTER TABLE `hotel_availibility`
 -- AUTO_INCREMENT for table `hotel_bookings`
 --
 ALTER TABLE `hotel_bookings`
-  MODIFY `hbook_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `hbook_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `hotel_transactions`
 --
 ALTER TABLE `hotel_transactions`
-  MODIFY `htrans_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `htrans_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `seats_avail`
@@ -671,7 +690,7 @@ ALTER TABLE `seats_avail`
 -- AUTO_INCREMENT for table `trips`
 --
 ALTER TABLE `trips`
-  MODIFY `trips_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `trips_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- Constraints for dumped tables
