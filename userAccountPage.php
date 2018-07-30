@@ -75,7 +75,9 @@ if($num_rows > 0){ //If customer took one or more trips
 mysqli_close($conn);
 ?>
 
-
+<?php 
+include 'utility.php';
+echo get_header(); ?>
 
 <!-- Account Information Table -->
 <p><span><strong>Account Information</strong></span></p>
@@ -183,3 +185,6 @@ echo "</tr>";
 ?>
 </tbody>
 </table>
+<?php 
+//include 'utility.php';
+echo get_footer(); ?>
