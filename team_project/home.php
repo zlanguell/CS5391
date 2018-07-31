@@ -148,9 +148,9 @@ body {
                   <div class="row">
                     <div class=" col-md-3">
                       <div class="form-group">
-                        <label for="">Select your airlines</label>
+                        <label for="">Select Your Airline</label>
                         <select id="flight" name="flight" class="form-control" placeholder="">
-                          <option value=""id="flight" name="flight" selected disabled>Select your airlines</option>
+                          <option value=""id="flight" name="flight" selected disabled>Select Your Airline</option>
                           <option>Delta</option>
                           <option>United</option>
                           <option>Southwest</option>
@@ -249,9 +249,9 @@ body {
                   <div class="row">
                     <div class=" col-md-3">
                       <div class="form-group">
-                        <label for="">Select your airlines</label>
+                        <label for="">Select Your Airline</label>
                         <select id="flight" name="flight" class="form-control" placeholder="">
-                          <option value=""id="flight" name="flight" selected disabled>Select your airlines</option>
+                          <option value=""id="flight" name="flight" selected disabled>Select Your Airline</option>
                           <option>Delta</option>
                           <option>United</option>
                           <option>Southwest</option>
