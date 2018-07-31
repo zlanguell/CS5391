@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.7.9
+-- version 4.8.2
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 29, 2018 at 03:44 AM
--- Server version: 10.1.31-MariaDB
--- PHP Version: 7.2.3
+-- Generation Time: Jul 31, 2018 at 06:03 AM
+-- Server version: 10.1.34-MariaDB
+-- PHP Version: 7.2.7
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -23,6 +23,7 @@ SET time_zone = "+00:00";
 --
 CREATE DATABASE IF NOT EXISTS `survey_db_2018` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
 USE `survey_db_2018`;
+
 -- --------------------------------------------------------
 
 --
@@ -459,6 +460,7 @@ CREATE TABLE `users` (
   `mname` text,
   `lname` text NOT NULL,
   `user_id` varchar(10) NOT NULL,
+  `password` varchar(15) NOT NULL,
   `email` varchar(30) NOT NULL,
   `phone` varchar(12) NOT NULL,
   `address` varchar(50) NOT NULL,
@@ -469,11 +471,12 @@ CREATE TABLE `users` (
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`fname`, `mname`, `lname`, `user_id`, `email`, `phone`, `address`, `mileage`) VALUES
-('Ethan', 'Middle', 'Stewart', 'estewart', 'estewart08@gmail.com', '512-999-9999', '123 Main St Austin, TX', 0),
-('John', 'J', 'Doe', 'JJDoe', 'JJdoe@gmail.com', '123456789012', '169 Bourbon St  New Orleans, LA 12345', 750),
-('Jane', 'K', 'Fennedy', 'JKFen', 'jFen@gmail.com', '987654321098', '333 Walstreet NYC, NY 56789', 9000),
-('Zachary', 'P', 'Languell', 'z_l24', 'z_l24@txstate.edu', '555555555555', '123 Fake Street San Marcos, TX 78666', 3500);
+INSERT INTO `users` (`fname`, `mname`, `lname`, `user_id`, `password`, `email`, `phone`, `address`, `mileage`) VALUES
+('Ethan', 'M', 'Stewart', 'estewart', 'password', 'estewart08@gmail.com', '512-999-9999', '123 Main St Austin, TX', 0),
+('John', 'J', 'Doe', 'JJDoe', '', 'JJdoe@gmail.com', '123456789012', '169 Bourbon St  New Orleans, LA 12345', 750),
+('Jane', 'K', 'Fennedy', 'JKFen', '', 'jFen@gmail.com', '987654321098', '333 Walstreet NYC, NY 56789', 9000),
+('Test2', '', 'test2', 'usertest2', 'password2', 'test2@test.com', '9999999999', '123 Main St Austin, TX', 0),
+('Zachary', 'P', 'Languell', 'z_l24', '', 'z_l24@txstate.edu', '555555555555', '123 Fake Street San Marcos, TX 78666', 3500);
 
 --
 -- Indexes for dumped tables
