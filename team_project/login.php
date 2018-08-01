@@ -70,52 +70,16 @@ $nouser="";
   	<link rel="stylesheet" href="css/footer.css">
   	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
   	<link rel="stylesheet" type="text/css" href="css/header1.css">
-  	<link rel="stylesheet" type="text/css" href="css/login.css">
+  	<link rel="stylesheet" type="text/css" href="css/page.css">
 
 	<style>
-		#background{
-	    background: url(images/flight1.jpg);
-	    width: 100%;
-	    height: auto;
-	    background-size: cover;
-	    background-position: center center;
-	    background-attachment: fixed;
-		}	
-		.affix {
-      	top:0;
-      	width: 100%;
-      	z-index: 9999 !important;
-  	}
-
-		.navbar{
-	  	border-radius: 0px !important;
-	  	margin-bottom: 0px;
-		}
-
-		#login-form{
-			padding-top: 6%;
-			padding-bottom: 10%;
-		}
-
-		.register-panel, .panel-default>.panel-heading, .panel .body{
-	 		background: rgba(0,0,0,0.4);
-	   	color: white;
-		}
-
-		.panel .body{
-			padding: 15px;
-		}
-
-		.panel{
-			margin-bottom: 0;
-		}
 	</style>
 
 	</head>
 
 <body>
 	<?php echo get_header();?>
-	<div class="container-fluid" id="background">
+	<div class="container-fluid" id="background-login">
 	<div class="container padding-top-10"  id="login-form">
 	  <div class="panel panel-default register-panel">
 			<div class="panel-heading">
@@ -135,6 +99,12 @@ $nouser="";
 					<div class="row">
 						<div class="col-md-3">
 							<input type="password" class="form-control" id="password" name="password" placeholder="Enter Password"/>
+						</div>
+					</div>
+					<br><br>
+					<div class="row">
+						<div class="col-md-3">
+							<a class="custom-link" href="register.php">Create Account</a>
 						</div>
 					</div>
 			<br><br>

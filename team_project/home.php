@@ -18,60 +18,9 @@
   <link rel="stylesheet" href="css/footer.css">
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
   <link rel="stylesheet" type="text/css" href="css/header1.css">
-  <link rel="stylesheet" type="text/css" href="css/login.css">
+  <link rel="stylesheet" type="text/css" href="css/page.css">
 </head>
 <style>
-body {
-  font-family: Arial;
-  margin: 0px;
-
-}
-
-#background{
-    background: url(images/vacation-web.jpg);
-    width: 100%;
-    height: auto;
-    background-size: cover;
-    background-position: center center;
-    background-attachment: fixed;
-}
-
-#search{
-  padding-top: 6%;
-  padding-bottom: 15%
-}
-
-#search-box{
-  padding-left: 0;
-  padding-right: 0;
-}
-.center{
-  text-align: center;
-}
-
-.navbar{
-  border-radius: 0px !important;
-  margin-bottom: 0px;
-}
-
-.affix {
-      top:0;
-      width: 100%;
-      z-index: 9999 !important;
-  }
-.nav-pills>li.active>a, .nav-pills>li.active>a:focus, .nav-pills>li.active>a:hover{
-  background: #000;
-}
-
-.nav-pills a{
-  background: #fff;
-  color: #000;
-}
-
-.home-panel{
-  background: rgba(0,0,0,0.4);
-  color: white;
-}
 </style>
 
 </head>
@@ -79,7 +28,7 @@ body {
   <?php echo(get_header());?>
 
 
-<div id="background">
+<div id="background-home">
   <div id="search" class="container-fluid">
     <div class="container">
       <ul class="nav nav-pills">
