@@ -1,5 +1,7 @@
 <?php
-function get_footer(){
+session_start(); //Start session to access session variables
+
+function get_footer(){ //Returns HTML code to display footer
 return <<< HTML
 	<footer class="footer-distributed">
 		<div class="footer-left">
@@ -39,7 +41,23 @@ HTML;
 }
 
 
-function get_header(){
+function get_header(){ //Returns HTML code to proper header. (guest vs registered user headers)
+	if(!isset($_SESSION["user"])){
+ 		$user = 'GUEST';
+ 		$my_header = guest_header($user);
+ 	}
+
+ 	else{
+ 		$user = $_SESSION["user"];
+ 		$my_header = user_header($user);
+ 	}
+
+ 	return $my_header;
+}
+
+
+
+function guest_header($username){
 return <<< HTML
 	<nav class="navbar navbar-inverse " data-spy="affix" data-offset-top="120" >
   		<div class="container-fluid">
@@ -55,8 +73,35 @@ return <<< HTML
         		-->
       		</ul>
       		<ul class="nav navbar-nav navbar-right">
+						<li><a href="#"><input type="text" style="background-color: khaki; color: red; font-weight: bold; text-transform: uppercase;" value="$username" readonly></a></li>
         		<li><a href="register.php"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
         		<li><a href="login.php"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+     		  </ul>
+    		</div>
+  		</div>
+	</nav>
+HTML;
+}
+
+function user_header($username){
+return <<< HTML
+	<nav class="navbar navbar-inverse " data-spy="affix" data-offset-top="120" >
+  		<div class="container-fluid">
+    		<div class="navbar-header">
+      		<a class="navbar-brand" href="index.php">TravelCo</a>
+    		</div>
+    		<div class="collapse navbar-collapse" id="myNavbar">
+      		<ul class="nav navbar-nav">
+        		<li><a href="index.php">HOME</a></li>
+        		<!-- 
+        		<li><a href="login.php">FLIGHTS</a></li>
+        		<li><a href="about.php">ABOUT US</a></li>
+        		-->
+      		</ul>
+      		<ul class="nav navbar-nav navbar-right">
+ 						<li><a href="#"><input type="text" style="background-color: khaki; color: red; font-weight: bold; text-transform: uppercase;" value="$username" readonly></a></li>
+ 						<li><a href="userAccountPage.php"><span class="glyphicon glyphicon-user"></span> My Account</a></li>
+        		<li><a href="logout.php"><span class="glyphicon glyphicon-log-in"></span> Log Out</a></li>
      		  </ul>
     		</div>
   		</div>
