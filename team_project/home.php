@@ -1,5 +1,5 @@
 <?php
-include 'utility.php';
+  include 'utility.php';
 
 ?>
 
@@ -194,7 +194,7 @@ body {
               <div class="panel-body">
                 <div class="page-header" style="margin-top:5px;">
                   <center><b><font id="formhead">SEARCH FOR A FLIGHT + HOTEL</font></b></center>
-                  <center><i class="fa fa-hotel fa-3x" style="margin-left: 20px"></i><i class="fa fa-plus fa-2x" style="margin-left: 20px"></i> <i class="fa fa-plane fa-3x" style="margin-left: 20px"></i></center>
+                  <center><i class="fa fa-plane fa-3x" style="margin-left: 20px"></i><i class="fa fa-plus fa-2x" style="margin-left: 20px"></i> <i class="fa fa-hotel fa-3x" style="margin-left: 20px"></i></center>
                 </div>
                 <form class="form-inline" name="myform" id="myform" method="post" action="flight-results.php">
                 <h3>Flight Information:</h3>
@@ -412,7 +412,7 @@ body {
                 </div>
                 <form class="form-inline" name="myform" id="myform" method="post" action="deal-results.php">
                    <div class="row">
-                    <div class="col-md-2">
+                    <div class="col-md-1">
                       <div class="form-group">
                         <label for="source">Source</label>
                           <select class="form-control" id="source" name="source">
@@ -426,7 +426,7 @@ body {
                           </select>
                      </div>
                     </div>
-                    <div class="col-md-1"></div>
+                    <div class="col-md-2"></div>
                     <div class=" col-md-2">
                       <div class="form-group">
                         <label for="">Destination</label>
@@ -476,7 +476,7 @@ body {
                     <div class="col-md-2">
                       <div class="form-group">
                         <label>Price Range(Low)</label>
-                          <input type="range" min="0" max="10000" value="50" step="100" class="low-slider" id="low">
+                          <input type="range" min="0" max="10000" value="0" step="100" class="low-slider" id="low">
                           <p>Value: <span id="low-range"></span></p>
                       </div>
                       <script>
@@ -492,13 +492,13 @@ body {
                     <div class="col-md-2">
                       <div class="form-group">
                         <label>Price Range(High)</label>
-                          <input type="range" min="0" max="10000" value="100" step="100" class="high-slider" id="high">
+                          <input type="range" min="0" max="10000" value="0" step="100" class="high-slider" id="high">
                           <p>Value: <span id="high-range"></span></p>
                       </div>
                       <script>
                         var slider2 = document.getElementById("high");
                         var output2 = document.getElementById("high-range");
-                        output.innerHTML = slider2.value;
+                        output2.innerHTML = slider2.value;
                         slider2.oninput = function() {
                           output2.innerHTML = this.value;
                         }
