@@ -1,8 +1,10 @@
 <?php 
 
 session_start();
-//$uName = $_POST['uName'];
+//$uName = $_SESSION['user'];
 $uName = "JKFen";
+//$uName = "estewart";
+
 
  
 $conn = mysqli_connect("localhost","root","","survey_db_2018");
@@ -27,6 +29,18 @@ if($num_rows > 0){ //If customer took one or more trips
 		
 		for($i = 0; $i < $num_rows; $i++) { //cycle through each trip
 			$trip = $tripInfo->fetch_array(MYSQLI_ASSOC);
+			
+			
+			if($trip["feedback_id"] != NULL){				
+			//Get Feedback
+			$feedbackId = $trip["feedback_id"];
+			$sql = "Select * FROM feedback WHERE feedback_id = '$feedbackId'";
+			$feedbackTripInfo = mysqli_query($conn, $sql);
+			$feedbackTrip = $feedbackTripInfo->fetch_array(MYSQLI_ASSOC);
+			$feedback = $feedbackTrip["comments"] . "<br /> <br />" . $feedbackTrip["rating"] . " / 10";
+			}
+			else{$feedback = "";}
+			
 			
 			//Get all the hotel information
 			$hbook_id =$trip["hbook_id"];
@@ -55,6 +69,7 @@ if($num_rows > 0){ //If customer took one or more trips
 			//Create trip record for display on user page
 			$record = array(
 				"trips_id"=>$trip["trips_id"],
+				"num_travelers"=>$trip["num_travelers"],
 				"hotel_name"=>$hotel["name"],				
 				"hotel_check_in"=>$hotelTrip["check_in"],
 				"hotel_check_out"=>$hotelTrip["check_out"],				
@@ -66,7 +81,10 @@ if($num_rows > 0){ //If customer took one or more trips
 				"arr_date"=>$flight["return_date"],
 				"arr_dept_time"=>$flight["return_dept_time"],
 				"flight_status"=>$flight["flight_status_id"],
-				"feedback"=>""
+				"feedback" =>$feedback
+				//"feedback"=>$feedbackTrip["comments"] . "<br /> <br />" . $feedbackTrip["rating"] . " / 10"
+				//"feedback_comments"=>$feedbackTrip["comments"],
+				//"feedback_rating" =>$feedbackTrip["rating"]
 			);
 			
 			array_push($trips, $record);
@@ -78,20 +96,84 @@ mysqli_close($conn);
 <?php 
 include 'utility.php';
 echo get_header(); ?>
+<html>
 
+<meta charset="utf-8">
+  	<meta name="viewport" content="width=device-width, initial-scale=1">
+  	<link href='https://fonts.googleapis.com/css?family=Poiret+One' rel='stylesheet' type='text/css'>
+  	<link href='https://fonts.googleapis.com/css?family=Josefin+Sans:700' rel='stylesheet' type='text/css'>
+  	<link href='https://fonts.googleapis.com/css?family=Poiret+One&subset=latin,latin-ext,cyrillic' rel='stylesheet' type='text/css'>
+  	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+  	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+  	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+  	<link href="http://fonts.googleapis.com/css?family=Cookie" rel="stylesheet" type="text/css">
+  	<link rel="stylesheet" href="css/footer.css">
+  	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
+  	<link rel="stylesheet" type="text/css" href="css/header1.css">
+  	<link rel="stylesheet" type="text/css" href="css/login.css">
+	
+	
+	<style>
+		#background{
+	    background: url(images/h3.jpg);
+	    width: 100%;
+	    height: auto;
+	    background-size: cover;
+	    background-position: center center;
+	    background-attachment: fixed;
+		}	
+		.affix {
+      top:0;
+      width: 100%;
+      z-index: 9999 !important;
+  }
+
+		.navbar{
+	  	border-radius: 0px !important;
+	  	margin-bottom: 0px;
+		}
+
+		#login-form{
+			padding-top: 6%;
+			padding-bottom: 10%;
+			background: rgba(0,0,0,.7)
+		}
+
+		.register-panel, .panel-default>.panel-heading, .panel .body{
+	 		background: rgba(0,0,0,0.4);
+	   	color: white;
+		}
+
+		.panel .body{
+			padding: 15px;
+		}
+		.home-panel{
+			background: rgba(0,0,0,0.4);
+			color: white;
+		}
+		
+		.panel{
+			margin-bottom: 0;
+		}
+	</style>
+	<title> TravelCo Account Page </title>
+	<body>
+	<div class="container-fluid" id="background">
+	<div class="container padding-top-10"  id="login-form">
 <!-- Account Information Table -->
-<p><span><strong>Account Information</strong></span></p>
-<table border="1" height="120">
+<p align = "center" style="color: white;"><span><strong><font size="8px" style="font-family: 'Josefin Sans', sans-serif;">Account Information</font></strong></span></p>
+<p style="color: white;"><span><strong><font size="6px" style="font-family: 'Josefin Sans', sans-serif;">User Information</font></strong></span></p>
+<table border="3" height="120">
 <tbody>
 <tr>
-<td align = "center"><strong>Username</strong></td>
-<td align = "center"><strong>First Name</strong></td>
-<td align = "center"><strong>Middle Name</strong></td>
-<td align = "center"><strong>Last Name</strong></td>
-<td align = "center"><strong>Address</strong></td>
-<td align = "center"><strong>Phone Number</strong></td>
-<td align = "center"><strong>Email</strong></td>
-<td align = "center"><strong>Mileage</strong></td>
+<td align = "center" style="color: white;"><strong>Username</strong></td>
+<td align = "center" style="color: white;"><strong>First Name</strong></td>
+<td align = "center" style="color: white;"><strong>Middle Name</strong></td>
+<td align = "center" style="color: white;"><strong>Last Name</strong></td>
+<td align = "center" style="color: white;"><strong>Address</strong></td>
+<td align = "center" style="color: white;"><strong>Phone Number</strong></td>
+<td align = "center" style="color: white;"><strong>Email</strong></td>
+<td align = "center" style="color: white;"><strong>Mileage</strong></td>
 </tr>
 <?php
 	/*Test Account
@@ -99,15 +181,15 @@ echo get_header(); ?>
 			array("Visa", "12345678901234", "11/20"));*/
 	$acc = $accInfo->fetch_array(MYSQLI_ASSOC);
 	echo "<tr>";					     
-	echo "<td align = \"center\">" . $acc["user_id"] . "</td>"; 		 /*<!-- Username    -->*/
-	echo "<td align = \"center\">" . $acc["fname"] . "</td>";   		 /*<!-- First Name  -->*/
-	echo "<td align = \"center\">" . $acc["mname"] . "</td>";   		 /*<!-- Midd Name   -->*/
-	echo "<td align = \"center\">" . $acc["lname"] . "</td>";   		 /*<!-- Last Name   -->*/
-	echo "<td align = \"center\">" . $acc["address"] . "</td>"; 		 /*<!-- Address     -->*/
-	echo "<td align = \"center\">" . $acc["phone"] . "</td>";   		 /*<!-- Phone Number-->*/
-	echo "<td align = \"center\">" . $acc["email"] . "</td>";   		 /*<!-- Email       -->*/
-	echo "<td align = \"center\">" . $acc["mileage"] . "</td>";   		 /*<!-- Mileage     -->*/	
-	echo "<td align = \"center\"><a href=\"updateAccountInfo.php\">change</a></td>";
+	echo "<td align = \"center\" style=\"color: white;\">" . $acc["user_id"] . "</td>"; 		 /*<!-- Username    -->*/
+	echo "<td align = \"center\" style=\"color: white;\">" . $acc["fname"] . "</td>";   		 /*<!-- First Name  -->*/
+	echo "<td align = \"center\" style=\"color: white;\">" . $acc["mname"] . "</td>";   		 /*<!-- Midd Name   -->*/
+	echo "<td align = \"center\" style=\"color: white;\">" . $acc["lname"] . "</td>";   		 /*<!-- Last Name   -->*/
+	echo "<td align = \"center\" style=\"color: white;\">" . $acc["address"] . "</td>"; 		 /*<!-- Address     -->*/
+	echo "<td align = \"center\" style=\"color: white;\">" . $acc["phone"] . "</td>";   		 /*<!-- Phone Number-->*/
+	echo "<td align = \"center\" style=\"color: white;\">" . $acc["email"] . "</td>";   		 /*<!-- Email       -->*/
+	echo "<td align = \"center\" style=\"color: white;\">" . $acc["mileage"] . "</td>";   		 /*<!-- Mileage     -->*/	
+	echo "<td align = \"center\" style=\"color: white;\"><a href=\"updateAccountInfo.php\">change</a></td>";
 	echo "</tr>";
 ?>
 </tbody>
@@ -115,22 +197,22 @@ echo get_header(); ?>
 
 
 <!-- Credit Card Information Table -->
-<p><strong><span>Credit Card Information</span></strong></p>
-<table border="1" height="120">
+<p style="color: white; padding-top: 5%;"><span><strong><font size="6px" style="font-family: 'Josefin Sans', sans-serif;">Credit Card Information</font></strong></span></p>
+<table border="3" height="120">
 <tbody>
 <tr>
-<td align = "center"><strong>CC Type</strong></td>
-<td align = "center"><strong>CC Number</strong></td>
-<td align = "center"><strong>Expiration Date</strong>(mm/yyyy)</td>
+<td align = "center" style="color: white;"><strong>CC Type</strong></td>
+<td align = "center" style="color: white;"><strong>CC Number</strong></td>
+<td align = "center" style="color: white;"><strong>Expiration Date</strong>(mm/yyyy)</td>
 </tr>
 <?php
 //$ccInfo = $accInfo[7];
 $cc = $ccInfo->fetch_array(MYSQLI_ASSOC);
 echo "<tr>";
-echo "<td align = \"center\">" . $cc["creditcard_type"] . "</td>";  /*<!-- CC Type     -->*/
-echo "<td align = \"center\">" . $cc["creditcard"] . "</td>";   /*<!-- CC Num      -->*/
-echo "<td align = \"center\">" . $cc["Exp_date"] . "</td>";     /*<!-- CC Expr     -->*/
-echo "<td align = \"center\"><a href=\"addRemoveCC.php\">add/remove</a></td>";
+echo "<td align = \"center\" style=\"color: white;\">" . $cc["creditcard_type"] . "</td>";  /*<!-- CC Type     -->*/
+echo "<td align = \"center\" style=\"color: white;\">" . $cc["creditcard"] . "</td>";   /*<!-- CC Num      -->*/
+echo "<td align = \"center\" style=\"color: white;\">" . $cc["Exp_date"] . "</td>";     /*<!-- CC Expr     -->*/
+echo "<td align = \"center\" style=\"color: white;\"><a href=\"addRemoveCC.php\">add/remove</a></td>";
 echo "</tr>";
 ?>
 
@@ -139,21 +221,22 @@ echo "</tr>";
 
 
 <!-- Trip Information Table -->
-<p><strong><span>Trip Information</span></strong></p>
-<table border="1" height = "120">
+<p style="color: white; padding-top: 5%;"><span><strong><font size="6px" style="font-family: 'Josefin Sans', sans-serif;">Trip Information</font></strong></span></p>
+<table border="3" height = "120">
 <tbody>
 <tr>
-<td align = "center"><p><strong>Trip Number</strong></p></td>
-<td align = "center"><strong>Hotel</strong></td>
-<td align = "center"><strong>Check-in</strong></td>
-<td align = "center"><strong>Check-out</strong></td>
-<td align = "center"><strong>Airline</strong></td>
-<td align = "center"><strong>Departure Airport</strong></td>
-<td align = "center"><strong>Dept. Date/Time</strong></td>
-<td align = "center"><strong>Arrival Airport</strong></td>
-<td align = "center"><strong>Arrival Dept. Date/Time</strong></td>
-<td align = "center"><strong>Status</strong></td>
-<td align = "center"><strong>Feedback</strong></td>
+<td align = "center" style="color: white;"><p><strong>Trip Number</strong></p></td>
+<td align = "center" style="color: white;"><p><strong>Number of Travelers</strong></p></td>
+<td align = "center" style="color: white;"><strong>Hotel</strong></td>
+<td align = "center" style="color: white;"><strong>Check-in</strong></td>
+<td align = "center" style="color: white;"><strong>Check-out</strong></td>
+<td align = "center" style="color: white;"><strong>Airline</strong></td>
+<td align = "center" style="color: white;"><strong>Departure Airport</strong></td>
+<td align = "center" style="color: white;"><strong>Dept. Date/Time</strong></td>
+<td align = "center" style="color: white;"><strong>Arrival Airport</strong></td>
+<td align = "center" style="color: white;"><strong>Arrival Dept. Date/Time</strong></td>
+<td align = "center" style="color: white;"><strong>Flight Status</strong></td>
+<td align = "center" style="color: white;"><strong>Feedback</strong></td>
 </tr>
 <?php
 	/*Test Trip
@@ -165,19 +248,20 @@ echo "</tr>";
 	
 	foreach($trips as $tripRecord){			
 		echo "<tr>"; 
-		echo "<td align = \"center\">" . $tripRecord["trips_id"] . "</td>"; 		/*<!-- Trip Number   	-->*/											  
-		echo "<td align = \"center\">" . $tripRecord["hotel_name"] . "</td>"; 		/*<!-- Hotel Name    	-->*/
-		echo "<td align = \"center\">" . $tripRecord["hotel_check_in"] . "</td>"; 	/*<!-- Hotel Check-in      -->*/
-		echo "<td align = \"center\">" . $tripRecord["hotel_check_out"] . "</td>"; /*<!-- Hotel Check-out   -->*/
-		echo "<td align = \"center\">" . $tripRecord["airline_name"] . "</td>"; 	/*<!-- Airline Name    -->*/
-		echo "<td align = \"center\">" . $tripRecord["dept_airport"] . "</td>"; 	/*<!-- Departure Airport -->*/
-		echo "<td align = \"center\">" . $tripRecord["dept_date"] . "  at  " . $tripRecord["dept_time"] ."</td>"; 		/*<!-- Departure Date/Time  -->*/
-		echo "<td align = \"center\">" . $tripRecord["arr_airport"] . "</td>"; 									/*<!-- Arrival Airport   -->*/
-		echo "<td align = \"center\">" . $tripRecord["arr_date"] . "  at  " . $tripRecord["arr_dept_time"] ."</td>"; 	/*<!-- Airline Name    -->*/
-		echo "<td align = \"center\">" . $tripRecord["flight_status"] . "</td>"; 									/*<!-- Flight Status   	-->*/
+		echo "<td align = \"center\" style=\"color: white;\">" . $tripRecord["trips_id"] . "</td>"; 		/*<!-- Trip Number   	-->*/
+		echo "<td align = \"center\" style=\"color: white;\">" . $tripRecord["num_travelers"] . "</td>"; 	/*<!-- Number Travelers	-->*/
+		echo "<td align = \"center\" style=\"color: white;\">" . $tripRecord["hotel_name"] . "</td>"; 		/*<!-- Hotel Name    	-->*/
+		echo "<td align = \"center\" style=\"color: white;\">" . $tripRecord["hotel_check_in"] . "</td>"; 	/*<!-- Hotel Check-in      -->*/
+		echo "<td align = \"center\" style=\"color: white;\">" . $tripRecord["hotel_check_out"] . "</td>"; /*<!-- Hotel Check-out   -->*/
+		echo "<td align = \"center\" style=\"color: white;\">" . $tripRecord["airline_name"] . "</td>"; 	/*<!-- Airline Name    -->*/
+		echo "<td align = \"center\" style=\"color: white;\">" . $tripRecord["dept_airport"] . "</td>"; 	/*<!-- Departure Airport -->*/
+		echo "<td align = \"center\" style=\"color: white;\">" . $tripRecord["dept_date"] . "  at  " . $tripRecord["dept_time"] ."</td>"; 		/*<!-- Departure Date/Time  -->*/
+		echo "<td align = \"center\" style=\"color: white;\">" . $tripRecord["arr_airport"] . "</td>"; 									/*<!-- Arrival Airport   -->*/
+		echo "<td align = \"center\" style=\"color: white;\">" . $tripRecord["arr_date"] . "  at  " . $tripRecord["arr_dept_time"] ."</td>"; 	/*<!-- Airline Name    -->*/
+		echo "<td align = \"center\" style=\"color: white;\">" . $tripRecord["flight_status"] . "</td>"; 									/*<!-- Flight Status   	-->*/
 		
 		if($tripRecord["feedback"] != ""){
-			echo "<td align = \"center\">" . $tripRecord["feedback"] . "</td>"; /*<!-- Feedback  -->*/
+			echo "<td align = \"center\" style=\"color: white;\">" . $tripRecord["feedback"] . "</td>"; /*<!-- Feedback  -->*/
 		}
 		else{ echo "<td align = \"center\"><a href=\"feedback.php\">leave feedback</a></td>";}
 		echo "</tr>";
@@ -185,6 +269,9 @@ echo "</tr>";
 ?>
 </tbody>
 </table>
-<?php 
-//include 'utility.php';
+</div>
+</div>
+</body>
+<?php
 echo get_footer(); ?>
+</html>

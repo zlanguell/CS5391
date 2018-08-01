@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.7.9
+-- version 4.8.2
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 29, 2018 at 03:44 AM
--- Server version: 10.1.31-MariaDB
--- PHP Version: 7.2.3
+-- Generation Time: Aug 01, 2018 at 01:33 AM
+-- Server version: 10.1.34-MariaDB
+-- PHP Version: 7.2.7
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -21,6 +21,8 @@ SET time_zone = "+00:00";
 --
 -- Database: `survey_db_2018`
 --
+CREATE DATABASE IF NOT EXISTS `survey_db_2018` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
+USE `survey_db_2018`;
 
 -- --------------------------------------------------------
 
@@ -88,8 +90,10 @@ INSERT INTO `airport_detail` (`airport_id`, `city`, `name`) VALUES
 ('JFK', 'New York', 'John F. Kennedy International '),
 ('LAS', 'Las Vegas', 'McCarran International'),
 ('LAX', 'Los Angeles', 'Los Angeles International'),
+('LHR', 'London', 'London Heathrow'),
 ('MDW', 'Chicago', 'Midway International'),
 ('PDX', 'Portland', 'Portland International'),
+('PIT', 'Pittsburgh', 'Pittsburgh International'),
 ('TPA', 'Tampa', 'Tampa International');
 
 -- --------------------------------------------------------
@@ -166,18 +170,19 @@ INSERT INTO `deals` (`deal_id`, `hotel_avail_id`, `flight_id`, `price`, `begin_d
 --
 
 CREATE TABLE `feedback` (
-  `feedback_id` int(11) NOT NULL,
+  `feedback_id` int(10) NOT NULL,
   `user_id` varchar(10) NOT NULL,
   `comments` text,
-  `rating` int(2) NOT NULL
+  `rating` int(2) NOT NULL,
+  `trips_id` int(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `feedback`
 --
 
-INSERT INTO `feedback` (`feedback_id`, `user_id`, `comments`, `rating`) VALUES
-(1, 'estewart', 'This website is awesome!', 10);
+INSERT INTO `feedback` (`feedback_id`, `user_id`, `comments`, `rating`, `trips_id`) VALUES
+(1, 'estewart', 'This website is awesome!', 10, 1);
 
 -- --------------------------------------------------------
 
@@ -210,17 +215,18 @@ CREATE TABLE `flights` (
 --
 
 INSERT INTO `flights` (`flight_id`, `flight_no`, `airbus_id`, `route_desc`, `dept_date`, `return_date`, `dept_time`, `return_dept_time`, `journey_hr`, `cabin_type`, `fare_dollars`, `fare_mileage`, `dept_airport`, `arr_airport`, `distance`, `airline_id`, `flight_status_id`) VALUES
-(1, 251, 737, 'Non-stop from Austin to Houston. One Way.', '2018-08-23', NULL, '07:00:00', NULL, 1, 'economy', 250, 5000, 'AUS', 'IAH', 200, 1, NULL),
-(2, 554, 757, 'Non-Stop from Los Angeles to Honolulu. Roundtrip.', '2018-09-21', '2018-10-01', '12:00:00', '08:00:00', 10, 'economy', 600, 15000, 'LAX', 'HNL', 5098, 2, NULL),
-(3, 554, 757, 'Non-Stop from Los Angeles to Honolulu. Roundtrip.', '2018-09-21', '2018-10-01', '12:00:00', '08:00:00', 10, 'first', 1200, 30000, 'LAX', 'HNL', 5098, 2, NULL),
-(4, 655, 767, '1 Stop. Houston to Las Angeles to Honolulu. One Way.', '2018-10-19', NULL, '14:00:00', NULL, 12, 'economy', 900, 30000, 'IAH', 'HNL', 3950, 2, NULL),
-(5, 655, 767, '1 Stop. Houston to Las Angeles to Honolulu. One Way.', '2018-10-19', NULL, '14:00:00', NULL, 12, 'first', 1800, 60000, 'IAH', 'HNL', 3950, 2, NULL),
-(6, 234, 737, 'Non-stop Austin to Las Vegas. Roundtrip', '2018-08-30', '2018-09-02', '05:00:00', '12:00:00', 6, 'economy', 250, 5000, 'AUS', 'LAS', 2800, 3, NULL),
-(7, 236, 737, 'Nonstop. Las Vegas to Austin. One Way.', '2018-08-18', NULL, '15:06:00', NULL, 6, 'economy', 250, 5000, 'LAS', 'AUS', 1400, 3, NULL),
-(8, 661, 767, '1 Stop. Houston to Las Angeles to Honolulu. Round Trip.', '2018-10-19', '2018-10-25', '14:00:00', '09:00:00', 24, 'economy', 1500, 55000, 'IAH', 'HNL', 7900, 2, NULL),
-(9, 661, 767, '1 Stop. Houston to Las Angeles to Honolulu. Round Trip.', '2018-12-07', '2018-12-13', '09:00:00', '12:00:00', 24, 'economy', 1500, 55000, 'IAH', 'HNL', 7900, 2, NULL),
-(10, 231, 737, 'Nonstop. Las Vegas to Austin. Round Trip.', '2018-10-01', '2018-10-04', '15:06:00', '08:04:00', 6, 'economy', 500, 10000, 'LAS', 'AUS', 2800, 1, NULL),
-(11, 230, 737, 'Nonstop. Las Vegas to Austin. Round Trip.', '2018-11-12', '2018-11-15', '09:06:00', '17:04:00', 6, 'economy', 500, 10000, 'LAS', 'AUS', 2800, 4, NULL);
+(1, 251, 737, 'Non-stop from Austin to Houston. One Way.', '2018-08-23', NULL, '07:00:00', NULL, 1, 'economy', 250, 25000, 'AUS', 'IAH', 200, 1, NULL),
+(2, 554, 757, 'Non-Stop from Los Angeles to Honolulu. Roundtrip.', '2018-09-21', '2018-10-01', '12:00:00', '08:00:00', 10, 'economy', 600, 25000, 'LAX', 'HNL', 5098, 2, NULL),
+(3, 554, 757, 'Non-Stop from Los Angeles to Honolulu. Roundtrip.', '2018-09-21', '2018-10-01', '12:00:00', '08:00:00', 10, 'first', 1200, 25000, 'LAX', 'HNL', 5098, 2, NULL),
+(4, 655, 767, '1 Stop. Houston to Las Angeles to Honolulu. One Way.', '2018-10-19', NULL, '14:00:00', NULL, 12, 'economy', 900, 25000, 'IAH', 'HNL', 3950, 2, NULL),
+(5, 655, 767, '1 Stop. Houston to Las Angeles to Honolulu. One Way.', '2018-10-19', NULL, '14:00:00', NULL, 12, 'first', 1800, 25000, 'IAH', 'HNL', 3950, 2, NULL),
+(6, 234, 737, 'Non-stop Austin to Las Vegas. Roundtrip', '2018-08-30', '2018-09-02', '05:00:00', '12:00:00', 6, 'economy', 250, 25000, 'AUS', 'LAS', 2800, 3, NULL),
+(7, 236, 737, 'Nonstop. Las Vegas to Austin. One Way.', '2018-08-18', NULL, '15:06:00', NULL, 6, 'economy', 250, 25000, 'LAS', 'AUS', 1400, 3, NULL),
+(8, 661, 767, '1 Stop. Houston to Las Angeles to Honolulu. Round Trip.', '2018-10-19', '2018-10-25', '14:00:00', '09:00:00', 24, 'economy', 1500, 25000, 'IAH', 'HNL', 7900, 2, NULL),
+(9, 661, 767, '1 Stop. Houston to Las Angeles to Honolulu. Round Trip.', '2018-12-07', '2018-12-13', '09:00:00', '12:00:00', 24, 'economy', 1500, 25000, 'IAH', 'HNL', 7900, 2, NULL),
+(10, 231, 737, 'Nonstop. Las Vegas to Austin. Round Trip.', '2018-10-01', '2018-10-04', '15:06:00', '08:04:00', 6, 'economy', 500, 25000, 'LAS', 'AUS', 2800, 1, NULL),
+(11, 230, 737, 'Nonstop. Las Vegas to Austin. Round Trip.', '2018-11-12', '2018-11-15', '09:06:00', '17:04:00', 6, 'economy', 500, 25000, 'LAS', 'AUS', 2800, 4, NULL),
+(12, 230, 767, 'Nonstop. Austin to London. Round Trip.', '2018-11-01', '2018-11-16', '09:06:00', '17:04:00', 10, 'economy', 1000, 50000, 'AUS', 'LHR', 10000, 1, NULL);
 
 -- --------------------------------------------------------
 
@@ -433,19 +439,21 @@ INSERT INTO `seats_avail` (`seats_avail_id`, `flight_id`, `eco_seats_remaining`,
 CREATE TABLE `trips` (
   `trips_id` int(10) NOT NULL,
   `hbook_id` int(10) DEFAULT NULL,
-  `fbook_id` int(10) NOT NULL,
-  `user_id` varchar(10) NOT NULL
+  `fbook_id` int(10) DEFAULT NULL,
+  `user_id` varchar(10) NOT NULL,
+  `num_travelers` int(11) DEFAULT NULL,
+  `feedback_id` int(10) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `trips`
 --
 
-INSERT INTO `trips` (`trips_id`, `hbook_id`, `fbook_id`, `user_id`) VALUES
-(1, 1, 1, 'estewart'),
-(2, 2, 2, 'JKFen'),
-(3, 3, 4, 'JKFen'),
-(4, NULL, 3, 'z_l24');
+INSERT INTO `trips` (`trips_id`, `hbook_id`, `fbook_id`, `user_id`, `num_travelers`, `feedback_id`) VALUES
+(1, 1, 1, 'estewart', 2, 1),
+(2, 2, 2, 'JKFen', 1, NULL),
+(3, 3, 4, 'JKFen', 1, NULL),
+(4, NULL, 3, 'z_l24', 2, NULL);
 
 -- --------------------------------------------------------
 
@@ -458,6 +466,7 @@ CREATE TABLE `users` (
   `mname` text,
   `lname` text NOT NULL,
   `user_id` varchar(10) NOT NULL,
+  `password` varchar(15) NOT NULL,
   `email` varchar(30) NOT NULL,
   `phone` varchar(12) NOT NULL,
   `address` varchar(50) NOT NULL,
@@ -468,11 +477,12 @@ CREATE TABLE `users` (
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`fname`, `mname`, `lname`, `user_id`, `email`, `phone`, `address`, `mileage`) VALUES
-('Ethan', 'Middle', 'Stewart', 'estewart', 'estewart08@gmail.com', '512-999-9999', '123 Main St Austin, TX', 0),
-('John', 'J', 'Doe', 'JJDoe', 'JJdoe@gmail.com', '123456789012', '169 Bourbon St  New Orleans, LA 12345', 750),
-('Jane', 'K', 'Fennedy', 'JKFen', 'jFen@gmail.com', '987654321098', '333 Walstreet NYC, NY 56789', 9000),
-('Zachary', 'P', 'Languell', 'z_l24', 'z_l24@txstate.edu', '555555555555', '123 Fake Street San Marcos, TX 78666', 3500);
+INSERT INTO `users` (`fname`, `mname`, `lname`, `user_id`, `password`, `email`, `phone`, `address`, `mileage`) VALUES
+('Ethan', 'M', 'Stewart', 'estewart', 'password', 'estewart08@gmail.com', '512-999-9999', '123 Main St Austin, TX', 0),
+('John', 'J', 'Doe', 'JJDoe', '', 'JJdoe@gmail.com', '123456789012', '169 Bourbon St  New Orleans, LA 12345', 750),
+('Jane', 'K', 'Fennedy', 'JKFen', '', 'jFen@gmail.com', '987654321098', '333 Walstreet NYC, NY 56789', 9000),
+('Test2', '', 'test2', 'usertest2', 'password2', 'test2@test.com', '9999999999', '123 Main St Austin, TX', 0),
+('Zachary', 'P', 'Languell', 'z_l24', '', 'z_l24@txstate.edu', '555555555555', '123 Fake Street San Marcos, TX 78666', 3500);
 
 --
 -- Indexes for dumped tables
@@ -524,7 +534,8 @@ ALTER TABLE `deals`
 --
 ALTER TABLE `feedback`
   ADD PRIMARY KEY (`feedback_id`),
-  ADD KEY `user_id` (`user_id`);
+  ADD KEY `user_id` (`user_id`),
+  ADD KEY `trips_id` (`trips_id`);
 
 --
 -- Indexes for table `flights`
@@ -607,7 +618,8 @@ ALTER TABLE `trips`
   ADD PRIMARY KEY (`trips_id`),
   ADD KEY `hbook_id` (`hbook_id`),
   ADD KEY `fbook_id` (`fbook_id`),
-  ADD KEY `user_id` (`user_id`);
+  ADD KEY `user_id` (`user_id`),
+  ADD KEY `feedback_id` (`feedback_id`);
 
 --
 -- Indexes for table `users`
@@ -635,13 +647,13 @@ ALTER TABLE `deals`
 -- AUTO_INCREMENT for table `feedback`
 --
 ALTER TABLE `feedback`
-  MODIFY `feedback_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `feedback_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `flights`
 --
 ALTER TABLE `flights`
-  MODIFY `flight_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `flight_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `flight_booking`
@@ -714,7 +726,8 @@ ALTER TABLE `deals`
 -- Constraints for table `feedback`
 --
 ALTER TABLE `feedback`
-  ADD CONSTRAINT `feedback_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`);
+  ADD CONSTRAINT `feedback_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`),
+  ADD CONSTRAINT `feedback_ibfk_2` FOREIGN KEY (`trips_id`) REFERENCES `trips` (`trips_id`);
 
 --
 -- Constraints for table `flights`
@@ -771,7 +784,8 @@ ALTER TABLE `seats_avail`
 ALTER TABLE `trips`
   ADD CONSTRAINT `trips_ibfk_1` FOREIGN KEY (`fbook_id`) REFERENCES `flight_booking` (`fbook_id`),
   ADD CONSTRAINT `trips_ibfk_2` FOREIGN KEY (`hbook_id`) REFERENCES `hotel_bookings` (`hbook_id`),
-  ADD CONSTRAINT `trips_ibfk_3` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`);
+  ADD CONSTRAINT `trips_ibfk_3` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`),
+  ADD CONSTRAINT `trips_ibfk_4` FOREIGN KEY (`feedback_id`) REFERENCES `feedback` (`feedback_id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
