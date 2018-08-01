@@ -263,7 +263,12 @@ echo "</tr>";
 		if($tripRecord["feedback"] != ""){
 			echo "<td align = \"center\" style=\"color: white;\">" . $tripRecord["feedback"] . "</td>"; /*<!-- Feedback  -->*/
 		}
-		else{ echo "<td align = \"center\"><a href=\"feedback.php\">leave feedback</a></td>";}
+		
+		else{ 
+			$_SESSION['tripRecord'] = $tripRecord;
+			echo "<td align = \"center\"><a href=\"feedback.php\">leave feedback</a></td>";
+			
+			}
 		echo "</tr>";
 	}
 ?>

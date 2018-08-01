@@ -1,5 +1,11 @@
 <?php
+	session_start();
 	include 'utility.php';
+	
+	
+	$tripRecord = $_SESSION["tripRecord"];
+	
+	
 ?>
 <html>
 	<head>
@@ -90,6 +96,7 @@
 	  <div class="panel panel-default register-panel">
 			<div class="panel-heading">
 				<b><font size="8px" style="font-family: 'Josefin Sans', sans-serif;">We want your feedback!</font><i class="fas fa-pencil-alt fa-3x" style="margin-left: 20px"></i></b>
+				<button type="button" onclick=location.href="userAccountPage.php" style="float: right;" data-toggle="tooltip" data-placement="right" title="Skip" class="btn btn-primary">SKIP</button>
 			</div>
 			<div class="panel body">
 				<table border="1" bordercolor="ffffff" height = "120" color = "white">
@@ -105,9 +112,23 @@
 					<td align = "center" style="color: white;"><strong>Dept. Date/Time</strong></td>
 					<td align = "center" style="color: white;"><strong>Arrival Airport</strong></td>
 					<td align = "center" style="color: white;"><strong>Arrival Dept. Date/Time</strong></td>
-					<td align = "center" style="color: white;"><strong>Flight Status</strong></td>
-					<td align = "center" style="color: white;"><strong>Feedback</strong></td>
+									
 				</tr>
+				
+				<?php
+					echo "<tr>"; 
+					echo "<td align = \"center\" style=\"color: white;\">" . $tripRecord["trips_id"] . "</td>"; 		/*<!-- Trip Number   	-->*/
+					echo "<td align = \"center\" style=\"color: white;\">" . $tripRecord["num_travelers"] . "</td>"; 	/*<!-- Number Travelers	-->*/
+					echo "<td align = \"center\" style=\"color: white;\">" . $tripRecord["hotel_name"] . "</td>"; 		/*<!-- Hotel Name    	-->*/
+					echo "<td align = \"center\" style=\"color: white;\">" . $tripRecord["hotel_check_in"] . "</td>"; 	/*<!-- Hotel Check-in      -->*/
+					echo "<td align = \"center\" style=\"color: white;\">" . $tripRecord["hotel_check_out"] . "</td>"; /*<!-- Hotel Check-out   -->*/
+					echo "<td align = \"center\" style=\"color: white;\">" . $tripRecord["airline_name"] . "</td>"; 	/*<!-- Airline Name    -->*/
+					echo "<td align = \"center\" style=\"color: white;\">" . $tripRecord["dept_airport"] . "</td>"; 	/*<!-- Departure Airport -->*/
+					echo "<td align = \"center\" style=\"color: white;\">" . $tripRecord["dept_date"] . "  at  " . $tripRecord["dept_time"] ."</td>"; 		/*<!-- Departure Date/Time  -->*/
+					echo "<td align = \"center\" style=\"color: white;\">" . $tripRecord["arr_airport"] . "</td>"; 									/*<!-- Arrival Airport   -->*/
+					echo "<td align = \"center\" style=\"color: white;\">" . $tripRecord["arr_date"] . "  at  " . $tripRecord["arr_dept_time"] ."</td>"; 	/*<!-- Airline Name    -->*/					
+					echo "</tr>";
+				?>
 				</tbody>
 				</table>
 				<br><br><br>
@@ -146,8 +167,7 @@
 			<br><br>
 			<div class="row padding-top-10">
 				<div class="col-sm-offset-5 col-sm-10">
-					<button type="submit" data-toggle="tooltip" data-placement="right" title="Submit" class="btn btn-primary">SUBMIT</button>
-					<button type="submit" data-toggle="tooltip" data-placement="right" title="Skip" class="btn btn-primary">SKIP</button>
+					<button type="submit" data-toggle="tooltip" data-placement="right" title="Submit" class="btn btn-primary">SUBMIT</button>					
 				</div>				
 			</div>				
 		</form>
