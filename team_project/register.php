@@ -16,45 +16,9 @@
   	<link rel="stylesheet" href="css/footer.css">
   	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
   	<link rel="stylesheet" type="text/css" href="css/header1.css">
-  	<link rel="stylesheet" type="text/css" href="css/login.css">
+  	<link rel="stylesheet" type="text/css" href="css/page.css">
 
 	<style>
-		#background{
-	    background: url(images/flight1.jpg);
-	    width: 100%;
-	    height: auto;
-	    background-size: cover;
-	    background-position: center center;
-	    background-attachment: fixed;
-		}	
-		.affix {
-      top:0;
-      width: 100%;
-      z-index: 9999 !important;
-  }
-
-		.navbar{
-	  	border-radius: 0px !important;
-	  	margin-bottom: 0px;
-		}
-
-		#login-form{
-			padding-top: 6%;
-			padding-bottom: 10%;
-		}
-
-		.register-panel, .panel-default>.panel-heading, .panel .body{
-	 		background: rgba(0,0,0,0.4);
-	   	color: white;
-		}
-
-		.panel .body{
-			padding: 15px;
-		}
-
-		.panel{
-			margin-bottom: 0;
-		}
 	</style>
 	<script type="text/Javascript">
 		function validate()
@@ -113,8 +77,7 @@
 				alert("Email not matching");
 				document.addUser.email2.focus();
 				return false;
-			}
-					
+			}			
 			if(document.addUser.phone.value.length>10)
 			{
 				alert("Please enter a valid phone number");
@@ -133,6 +96,42 @@
 				document.addUser.address.focus();
 				return false;
 			}
+			if(document.addUser.creditcard.value=="")
+			{
+				alert("Please enter your creditcard");
+				document.addUser.creditcard.focus();
+				return false;
+			}
+			if(isNaN(document.addUser.creditcard.value))
+			{
+				alert("Invalid Creditcard Number");
+				document.addUser.creditcard.focus();
+				return false;
+			}
+			if(document.addUser.cardtype.value=="")
+			{
+				alert("Please enter your card type");
+				document.addUser.cardtype.focus();
+				return false;
+			}
+			if(document.addUser.cvc.value=="")
+			{
+				alert("Please enter your CVC");
+				document.addUser.cvc.focus();
+				return false;
+			}
+			if(isNaN(document.addUser.cvc.value))
+			{
+				alert("Invalid CVC Number");
+				document.addUser.cvc.focus();
+				return false;
+			}
+			if(document.addUser.expdate.value=="")
+			{
+				alert("Please enter your expiration date");
+				document.addUser.expdate.focus();
+				return false;
+			}
 		}
 	</script>
 
@@ -140,8 +139,8 @@
 
 <body>
 	<?php echo get_header();?>
-	<div class="container-fluid" id="background">
-	<div class="container padding-top-10"  id="login-form">
+	<div class="container-fluid" id="background-register">
+	<div class="container padding-top-10"  id="register-form">
 	  <div class="panel panel-default register-panel">
 			<div class="panel-heading">
 				<b><font size="8px" style="font-family: 'Josefin Sans', sans-serif;">SIGN UP</font><i class="fas fa-pencil-alt fa-3x" style="margin-left: 20px"></i></b>
@@ -201,16 +200,32 @@
 							<input  type="text" class="form-control" id="address" name="address" placeholder="Enter Address"/>
 						</div>
 					</div>
-			<br><br>
-			<div class="row padding-top-10">
-				<div class="col-sm-offset-5 col-sm-10">
-					<button type="submit" data-toggle="tooltip" data-placement="right" title="REGISTER!" class="btn btn-primary">SUBMIT</button>
-				</div>				
-			</div>				
-		</form>
+					<br>
+					<label for="creditcard" class="control-label padding-top-10">Credit Card:</label>
+					<div class="row padding-top-10">
+						<div class="col-md-3">
+							<input  type="text" class="form-control" id="creditcard" name="creditcard" placeholder="Enter CC Number"/>
+						</div>
+						<div class="col-md-3">
+							<input  type="text" class="form-control" id="cardtype" name="cardtype" placeholder="Enter Card Type"/>
+						</div>
+						<div class="col-md-3">
+							<input  type="text" class="form-control" id="cvc" name="cvc" placeholder="Enter CVC Number"/>
+						</div>		
+						<div class="col-md-3">
+							<input  type="text" class="form-control" id="expdate" name="expdate" placeholder="Enter Exp Date MM/YY"/>
+						</div>
+					</div>
+					<br><br>
+					<div class="row padding-top-10">
+						<div class="col-sm-offset-5 col-sm-10">
+							<button type="submit" data-toggle="tooltip" data-placement="right" title="REGISTER!" class="btn btn-primary">SUBMIT</button>
+						</div>				
+					</div>				
+				</form>
+			</div>
+		</div>
 	</div>
-	</div>
-</div>
 </div>
   <?php echo get_footer();?>
 	</body>
