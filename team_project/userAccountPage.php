@@ -244,8 +244,6 @@ echo "</tr>";
 		array("1234","USERID", "06/07/08", "06/09/08", "UA6574", "H56789", "****"),
 		array("4567","USERID", "09/20/09", "10/15/09", "AA1298", "H54321", "")
 	);*/
-	$idarray = array();
-	$_SESSION['idarray'] = $idarray;
 	foreach($trips as $tripRecord){			
 		echo "<tr>"; 
 		echo "<td align = \"center\" style=\"color: white;\">" . $tripRecord["trips_id"] . "</td>"; 		/*<!-- Trip Number   	-->*/
@@ -265,10 +263,7 @@ echo "</tr>";
 		}
 		
 		else{ 
-			$id = $tripRecord["trips_id"];
-			$_SESSION['tripRecord' . $id ] = $tripRecord;
-			$_SESSION['idarray[$trips_id]'] = $tripRecord;
-
+			$_SESSION['tripRecord'] = $tripRecord;
 			$tripid = $tripRecord["trips_id"];
 			echo "<td align = \"center\"><a href=\"feedback.php?tripid=$tripid\">leave feedback</a></td>";
 			}
