@@ -83,7 +83,7 @@ $nouser="";
 	<div class="container padding-top-10"  id="login-form">
 	  <div class="panel panel-default register-panel">
 			<div class="panel-heading">
-				<b><font size="8px" style="font-family: 'Josefin Sans', sans-serif;">LOGIN</font><i class="fas fa-sign-in-alt fa-3x" style="margin-left: 20px"></i></b>
+				<b><font size="8px" style="font-family: 'Josefin Sans', sans-serif;">LOGIN</font><i class="fas fa-user fa-3x" style="margin-left: 20px"></i></b>
 			</div>
 			<div class="panel body">
 				<form name="login" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">

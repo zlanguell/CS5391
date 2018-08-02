@@ -67,14 +67,14 @@ return <<< HTML
     		<div class="collapse navbar-collapse" id="myNavbar">
       		<ul class="nav navbar-nav">
         		<li><a href="index.php">HOME</a></li>
-        		<li><a href="flightStatus.php">FLIGHT STATUS</a></li>
         		<!-- 
+        		<li><a href="login.php">FLIGHTS</a></li>
         		<li><a href="about.php">ABOUT US</a></li>
         		-->
       		</ul>
       		<ul class="nav navbar-nav navbar-right">
 						<li><a href="#"><input type="text" style="background-color: khaki; color: red; font-weight: bold; text-transform: uppercase;" value="$username" readonly></a></li>
-        		<li><a href="register.php"><span class="glyphicon glyphicon-pencil"></span> Sign Up</a></li>
+        		<li><a href="register.php"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
         		<li><a href="login.php"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
      		  </ul>
     		</div>
@@ -93,8 +93,8 @@ return <<< HTML
     		<div class="collapse navbar-collapse" id="myNavbar">
       		<ul class="nav navbar-nav">
         		<li><a href="index.php">HOME</a></li>
-        		<li><a href="flightStatus.php">FLIGHT STATUS</a></li>
         		<!-- 
+        		<li><a href="login.php">FLIGHTS</a></li>
         		<li><a href="about.php">ABOUT US</a></li>
         		-->
       		</ul>

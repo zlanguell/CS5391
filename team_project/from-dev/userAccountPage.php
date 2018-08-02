@@ -109,7 +109,7 @@ echo get_header(); ?>
   	<link rel="stylesheet" href="css/footer.css">
   	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
   	<link rel="stylesheet" type="text/css" href="css/header1.css">
-  	<link rel="stylesheet" type="text/css" href="css/page.css">
+  	<link rel="stylesheet" type="text/css" href="css/login.css">
 	
 	
 	<style>
@@ -160,7 +160,7 @@ echo get_header(); ?>
 	<div class="container-fluid" id="background">
 	<div class="container padding-top-10"  id="login-form">
 <!-- Account Information Table -->
-<p align = "center" style="color: white;"><span><strong><font size="8px" style="font-family: 'Josefin Sans', sans-serif;">Account Information</font></strong><i class="fas fa-user fa-3x" style="margin-left: 20px"></i></span></p>
+<p align = "center" style="color: white;"><span><strong><font size="8px" style="font-family: 'Josefin Sans', sans-serif;">Account Information</font></strong></span></p>
 <p style="color: white;"><span><strong><font size="6px" style="font-family: 'Josefin Sans', sans-serif;">User Information</font></strong></span></p>
 <table border="3" height="120">
 <tbody>
@@ -244,8 +244,7 @@ echo "</tr>";
 		array("1234","USERID", "06/07/08", "06/09/08", "UA6574", "H56789", "****"),
 		array("4567","USERID", "09/20/09", "10/15/09", "AA1298", "H54321", "")
 	);*/
-	$idarray = array();
-	$_SESSION['idarray'] = $idarray;
+	
 	foreach($trips as $tripRecord){			
 		echo "<tr>"; 
 		echo "<td align = \"center\" style=\"color: white;\">" . $tripRecord["trips_id"] . "</td>"; 		/*<!-- Trip Number   	-->*/
@@ -265,16 +264,12 @@ echo "</tr>";
 		}
 		
 		else{ 
-			$id = $tripRecord["trips_id"];
-			$_SESSION['tripRecord' . $id ] = $tripRecord;
-			$_SESSION['idarray[$trips_id]'] = $tripRecord;
-
-			$tripid = $tripRecord["trips_id"];
-			echo "<td align = \"center\"><a href=\"feedback.php?tripid=$tripid\">leave feedback</a></td>";
+			$_SESSION['tripRecord'] = $tripRecord;
+			echo "<td align = \"center\"><a href=\"feedback.php\">leave feedback</a></td>";
+			
 			}
 		echo "</tr>";
 	}
-	echo sizeof($_SESSION["idarray"]);
 ?>
 </tbody>
 </table>

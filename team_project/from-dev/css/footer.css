@@ -1,11 +1,3 @@
-/*
-* adjustments for icons in footer
-*/
-.fa-phone:before, .fa-map-marker-alt:before{
-  line-height: 37px !important;
-  font-size: 18px !important;
-}
-
 .footer-distributed .footer-icons a{
   padding-top: 8px;
 }
