@@ -1,7 +1,8 @@
 <?php 
-
-//$uName = $_SESSION['user'];
-$uName = "JKFen";
+include 'utility.php';
+//session_start();
+$uName = $_SESSION['user'];
+//$uName = "JKFen";
 //$uName = "estewart";
 
 
@@ -93,7 +94,6 @@ mysqli_close($conn);
 ?>
 
 <?php 
-include 'utility.php';
 echo get_header(); ?>
 <html>
 

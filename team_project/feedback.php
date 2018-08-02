@@ -1,9 +1,13 @@
 <?php
-	session_start();
 	include 'utility.php';
 	
 	
 	$tripRecord = $_SESSION["tripRecord"];
+	if(isset($_POST['feedback-submit']))
+{
+	$user = $_POST['username'];
+	$pass = $_POST['password'];
+}
 	
 	
 ?>
@@ -22,7 +26,7 @@
   	<link rel="stylesheet" href="css/footer.css">
   	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
   	<link rel="stylesheet" type="text/css" href="css/header1.css">
-  	<link rel="stylesheet" type="text/css" href="css/login.css">
+  	<link rel="stylesheet" type="text/css" href="css/page.css">
 
 	<style>
 		#background{
@@ -166,6 +170,7 @@
 					</div>
 			<br><br>
 			<div class="row padding-top-10">
+				<input type="hidden" name="feedback-submit" value="true">
 				<div class="col-sm-offset-5 col-sm-10">
 					<button type="submit" data-toggle="tooltip" data-placement="right" title="Submit" class="btn btn-primary">SUBMIT</button>					
 				</div>				
