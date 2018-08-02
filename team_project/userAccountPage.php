@@ -1,9 +1,17 @@
 <?php 
+include 'utility.php';
+//session_start();
+$uName = $_SESSION['user'];
+//$uName = "JKFen";
+//$uName = "estewart";
 
+<<<<<<< HEAD
 //$uName = $_SESSION['user'];
 $uName = "JKFen";
 //$uName = "estewart";
 
+=======
+>>>>>>> develop
 
  
 $conn = mysqli_connect("localhost","root","","survey_db_2018");
@@ -93,7 +101,10 @@ mysqli_close($conn);
 ?>
 
 <?php 
+<<<<<<< HEAD
 include 'utility.php';
+=======
+>>>>>>> develop
 echo get_header(); ?>
 <html>
 
@@ -126,6 +137,7 @@ echo get_header(); ?>
       width: 100%;
       z-index: 9999 !important;
   }
+<<<<<<< HEAD
 
 		.navbar{
 	  	border-radius: 0px !important;
@@ -143,6 +155,25 @@ echo get_header(); ?>
 	   	color: white;
 		}
 
+=======
+
+		.navbar{
+	  	border-radius: 0px !important;
+	  	margin-bottom: 0px;
+		}
+
+		#login-form{
+			padding-top: 6%;
+			padding-bottom: 10%;
+			background: rgba(0,0,0,.7)
+		}
+
+		.register-panel, .panel-default>.panel-heading, .panel .body{
+	 		background: rgba(0,0,0,0.4);
+	   	color: white;
+		}
+
+>>>>>>> develop
 		.panel .body{
 			padding: 15px;
 		}

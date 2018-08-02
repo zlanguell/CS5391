@@ -27,6 +27,7 @@
 .navbar{
   border-radius: 0px !important;
   margin-bottom: 0px !important;
+  background: red !important;
 }
 
 .navigate
@@ -38,21 +39,21 @@
 #heading-name
 {	font-family: 'Josefin Sans', sans-serif;
 	margin-top: 20px;
-	font-size:90px;	
-}
+	font-size:90px;
 
+	
+	
+}
 #formhead
 {
 	font-family: 'Josefin Sans', sans-serif;
 	text-align:center;
 	font-size:40px;
 }
-
 #tm
 {
 	font-size:50px;	
 }
-
 .list
 {
  display: block;

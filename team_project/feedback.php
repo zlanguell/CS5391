@@ -1,9 +1,20 @@
 <?php
+<<<<<<< HEAD
 	session_start();
+=======
+>>>>>>> develop
 	include 'utility.php';
 	
 	
 	$tripRecord = $_SESSION["tripRecord"];
+<<<<<<< HEAD
+=======
+	if(isset($_POST['feedback-submit']))
+{
+	$user = $_POST['username'];
+	$pass = $_POST['password'];
+}
+>>>>>>> develop
 	
 	
 ?>
@@ -22,7 +33,11 @@
   	<link rel="stylesheet" href="css/footer.css">
   	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
   	<link rel="stylesheet" type="text/css" href="css/header1.css">
+<<<<<<< HEAD
   	<link rel="stylesheet" type="text/css" href="css/login.css">
+=======
+  	<link rel="stylesheet" type="text/css" href="css/page.css">
+>>>>>>> develop
 
 	<style>
 		#background{
@@ -48,6 +63,7 @@
 			padding-top: 6%;
 			padding-bottom: 10%;
 		}
+<<<<<<< HEAD
 
 		.register-panel, .panel-default>.panel-heading, .panel .body{
 	 		background: rgba(0,0,0,0.4);
@@ -89,6 +105,49 @@
 
 	</head>
 
+=======
+
+		.register-panel, .panel-default>.panel-heading, .panel .body{
+	 		background: rgba(0,0,0,0.4);
+	   	color: white;
+		}
+
+		.panel .body{
+			padding: 15px;
+		}
+
+		.panel{
+			margin-bottom: 0;
+		}
+		
+		legend {			 
+			color: #FFFFFF;		
+		}
+		
+	</style>
+	<script type="text/Javascript">
+		function validate()
+		{
+			if(document.feedback.rating.value=="")
+			{
+				alert("Please select a rating");
+				document.feedback.rating.focus();
+				return false;
+			}
+			
+			if(document.feedback.comments.value=="")
+			{
+				alert("Please enter comments");
+				document.feedback.comments.focus();
+				return false;
+			}
+			
+		}
+	</script>
+
+	</head>
+
+>>>>>>> develop
 <body>
 	<?php echo get_header();?>
 	<div class="container-fluid" id="background">
@@ -166,6 +225,10 @@
 					</div>
 			<br><br>
 			<div class="row padding-top-10">
+<<<<<<< HEAD
+=======
+				<input type="hidden" name="feedback-submit" value="true">
+>>>>>>> develop
 				<div class="col-sm-offset-5 col-sm-10">
 					<button type="submit" data-toggle="tooltip" data-placement="right" title="Submit" class="btn btn-primary">SUBMIT</button>					
 				</div>				

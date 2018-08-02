@@ -2,8 +2,8 @@
 -- version 4.8.2
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Aug 01, 2018 at 01:33 AM
+-- Host: localhost
+-- Generation Time: Aug 02, 2018 at 02:43 AM
 -- Server version: 10.1.34-MariaDB
 -- PHP Version: 7.2.7
 
@@ -215,18 +215,18 @@ CREATE TABLE `flights` (
 --
 
 INSERT INTO `flights` (`flight_id`, `flight_no`, `airbus_id`, `route_desc`, `dept_date`, `return_date`, `dept_time`, `return_dept_time`, `journey_hr`, `cabin_type`, `fare_dollars`, `fare_mileage`, `dept_airport`, `arr_airport`, `distance`, `airline_id`, `flight_status_id`) VALUES
-(1, 251, 737, 'Non-stop from Austin to Houston. One Way.', '2018-08-23', NULL, '07:00:00', NULL, 1, 'economy', 250, 25000, 'AUS', 'IAH', 200, 1, NULL),
-(2, 554, 757, 'Non-Stop from Los Angeles to Honolulu. Roundtrip.', '2018-09-21', '2018-10-01', '12:00:00', '08:00:00', 10, 'economy', 600, 25000, 'LAX', 'HNL', 5098, 2, NULL),
-(3, 554, 757, 'Non-Stop from Los Angeles to Honolulu. Roundtrip.', '2018-09-21', '2018-10-01', '12:00:00', '08:00:00', 10, 'first', 1200, 25000, 'LAX', 'HNL', 5098, 2, NULL),
-(4, 655, 767, '1 Stop. Houston to Las Angeles to Honolulu. One Way.', '2018-10-19', NULL, '14:00:00', NULL, 12, 'economy', 900, 25000, 'IAH', 'HNL', 3950, 2, NULL),
-(5, 655, 767, '1 Stop. Houston to Las Angeles to Honolulu. One Way.', '2018-10-19', NULL, '14:00:00', NULL, 12, 'first', 1800, 25000, 'IAH', 'HNL', 3950, 2, NULL),
-(6, 234, 737, 'Non-stop Austin to Las Vegas. Roundtrip', '2018-08-30', '2018-09-02', '05:00:00', '12:00:00', 6, 'economy', 250, 25000, 'AUS', 'LAS', 2800, 3, NULL),
-(7, 236, 737, 'Nonstop. Las Vegas to Austin. One Way.', '2018-08-18', NULL, '15:06:00', NULL, 6, 'economy', 250, 25000, 'LAS', 'AUS', 1400, 3, NULL),
-(8, 661, 767, '1 Stop. Houston to Las Angeles to Honolulu. Round Trip.', '2018-10-19', '2018-10-25', '14:00:00', '09:00:00', 24, 'economy', 1500, 25000, 'IAH', 'HNL', 7900, 2, NULL),
-(9, 661, 767, '1 Stop. Houston to Las Angeles to Honolulu. Round Trip.', '2018-12-07', '2018-12-13', '09:00:00', '12:00:00', 24, 'economy', 1500, 25000, 'IAH', 'HNL', 7900, 2, NULL),
-(10, 231, 737, 'Nonstop. Las Vegas to Austin. Round Trip.', '2018-10-01', '2018-10-04', '15:06:00', '08:04:00', 6, 'economy', 500, 25000, 'LAS', 'AUS', 2800, 1, NULL),
-(11, 230, 737, 'Nonstop. Las Vegas to Austin. Round Trip.', '2018-11-12', '2018-11-15', '09:06:00', '17:04:00', 6, 'economy', 500, 25000, 'LAS', 'AUS', 2800, 4, NULL),
-(12, 230, 767, 'Nonstop. Austin to London. Round Trip.', '2018-11-01', '2018-11-16', '09:06:00', '17:04:00', 10, 'economy', 1000, 50000, 'AUS', 'LHR', 10000, 1, NULL);
+(1, 251, 737, 'Non-stop from Austin to Houston. One Way.', '2018-08-23', NULL, '07:00:00', NULL, 1, 'economy', 250, 25000, 'AUS', 'IAH', 200, 1, 'delayed'),
+(2, 554, 757, 'Non-Stop from Los Angeles to Honolulu. Roundtrip.', '2018-09-21', '2018-10-01', '12:00:00', '08:00:00', 10, 'economy', 600, 25000, 'LAX', 'HNL', 5098, 2, 'on time'),
+(3, 554, 757, 'Non-Stop from Los Angeles to Honolulu. Roundtrip.', '2018-09-21', '2018-10-01', '12:00:00', '08:00:00', 10, 'first', 1200, 25000, 'LAX', 'HNL', 5098, 2, 'on time'),
+(4, 655, 767, '1 Stop. Houston to Las Angeles to Honolulu. One Way.', '2018-10-19', NULL, '14:00:00', NULL, 12, 'economy', 900, 25000, 'IAH', 'HNL', 3950, 2, 'on time'),
+(5, 655, 767, '1 Stop. Houston to Las Angeles to Honolulu. One Way.', '2018-10-19', NULL, '14:00:00', NULL, 12, 'first', 1800, 25000, 'IAH', 'HNL', 3950, 2, 'on time'),
+(6, 234, 737, 'Non-stop Austin to Las Vegas. Roundtrip', '2018-08-30', '2018-09-02', '05:00:00', '12:00:00', 6, 'economy', 250, 25000, 'AUS', 'LAS', 2800, 3, 'on time'),
+(7, 236, 737, 'Nonstop. Las Vegas to Austin. One Way.', '2018-08-18', NULL, '15:06:00', NULL, 6, 'economy', 250, 25000, 'LAS', 'AUS', 1400, 3, 'on time'),
+(8, 661, 767, '1 Stop. Houston to Las Angeles to Honolulu. Round Trip.', '2018-10-19', '2018-10-25', '14:00:00', '09:00:00', 24, 'economy', 1500, 25000, 'IAH', 'HNL', 7900, 2, 'on time'),
+(9, 661, 767, '1 Stop. Houston to Las Angeles to Honolulu. Round Trip.', '2018-12-07', '2018-12-13', '09:00:00', '12:00:00', 24, 'economy', 1500, 25000, 'IAH', 'HNL', 7900, 2, 'on time'),
+(10, 231, 737, 'Nonstop. Las Vegas to Austin. Round Trip.', '2018-10-01', '2018-10-04', '15:06:00', '08:04:00', 6, 'economy', 500, 25000, 'LAS', 'AUS', 2800, 1, 'on time'),
+(11, 230, 737, 'Nonstop. Las Vegas to Austin. Round Trip.', '2018-11-12', '2018-11-15', '09:06:00', '17:04:00', 6, 'economy', 500, 25000, 'LAS', 'AUS', 2800, 4, 'on time'),
+(12, 230, 767, 'Nonstop. Austin to London. Round Trip.', '2018-11-01', '2018-11-16', '09:06:00', '17:04:00', 10, 'economy', 1000, 50000, 'AUS', 'LHR', 10000, 1, 'on time');
 
 -- --------------------------------------------------------
 
@@ -266,8 +266,10 @@ CREATE TABLE `flight_status` (
 
 INSERT INTO `flight_status` (`flight_status_id`) VALUES
 ('arrived'),
+('canceled'),
 ('delayed'),
-('in flight');
+('in flight'),
+('on time');
 
 -- --------------------------------------------------------
 
@@ -479,10 +481,10 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`fname`, `mname`, `lname`, `user_id`, `password`, `email`, `phone`, `address`, `mileage`) VALUES
 ('Ethan', 'M', 'Stewart', 'estewart', 'password', 'estewart08@gmail.com', '512-999-9999', '123 Main St Austin, TX', 0),
-('John', 'J', 'Doe', 'JJDoe', '', 'JJdoe@gmail.com', '123456789012', '169 Bourbon St  New Orleans, LA 12345', 750),
-('Jane', 'K', 'Fennedy', 'JKFen', '', 'jFen@gmail.com', '987654321098', '333 Walstreet NYC, NY 56789', 9000),
-('Test2', '', 'test2', 'usertest2', 'password2', 'test2@test.com', '9999999999', '123 Main St Austin, TX', 0),
-('Zachary', 'P', 'Languell', 'z_l24', '', 'z_l24@txstate.edu', '555555555555', '123 Fake Street San Marcos, TX 78666', 3500);
+('John', 'J', 'Doe', 'JJDoe', 'password', 'JJdoe@gmail.com', '123456789012', '169 Bourbon St  New Orleans, LA 12345', 750),
+('Jane', 'K', 'Fennedy', 'JKFen', 'password', 'jFen@gmail.com', '987654321098', '333 Walstreet NYC, NY 56789', 9000),
+('Test2', '', 'test2', 'usertest2', 'password', 'test2@test.com', '9999999999', '123 Main St Austin, TX', 0),
+('Zachary', 'P', 'Languell', 'z_l24', 'password', 'z_l24@txstate.edu', '555555555555', '123 Fake Street San Marcos, TX 78666', 3500);
 
 --
 -- Indexes for dumped tables
