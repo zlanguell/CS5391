@@ -359,7 +359,7 @@
                 <div class="page-header" style="margin-top:5px;">
                   <center><b><font id="formhead">SEARCH OUR DEALS</font></b><i class="fa fa-dollar-sign fa-3x" style="margin-left: 20px"></i></center>
                 </div>
-                <form class="form-inline" name="myform" id="myform" method="post" action="deal-results.php">
+                <form class="form-inline" name="myform" id="myform" method="post" action="deals.php">
                    <div class="row">
                     <div class="col-md-1">
                       <div class="form-group">
@@ -425,39 +425,25 @@
                     <div class="col-md-2">
                       <div class="form-group">
                         <label>Price Range(Low)</label>
-                          <input type="range" min="0" max="10000" value="0" step="100" class="low-slider" id="low">
-                          <p>Value: <span id="low-range"></span></p>
+                        <input type="range" name="lowslider" min="0" max="10000" value="0" step ="100" oninput="this.form.low.value=this.value" />
+                        <br>
+                        <input type="number" id="low" name="low" min="0" max="10000" value="0" oninput="this.form.lowslider.value=this.value" />
                       </div>
-                      <script>
-                        var slider = document.getElementById("low");
-                        var output = document.getElementById("low-range");
-                        output.innerHTML = slider.value;
-                        slider.oninput = function() {
-                          output.innerHTML = this.value;
-                        }
-                      </script>
                     </div>
                     <div class="col-md-1"></div>
                     <div class="col-md-2">
                       <div class="form-group">
                         <label>Price Range(High)</label>
-                          <input type="range" min="0" max="10000" value="0" step="100" class="high-slider" id="high">
-                          <p>Value: <span id="high-range"></span></p>
+                        <input type="range" name="highslider" min="0" max="10000" value="0" step ="100" oninput="this.form.high.value=this.value" />
+                        <br>
+                        <input type="number" id="high" name="high" min="0" max="10000" value="0" oninput="this.form.highslider.value=this.value" />
                       </div>
-                      <script>
-                        var slider2 = document.getElementById("high");
-                        var output2 = document.getElementById("high-range");
-                        output2.innerHTML = slider2.value;
-                        slider2.oninput = function() {
-                          output2.innerHTML = this.value;
-                        }
-                      </script>
                     </div>
                   </div>
                   <br><br><br><br>
                   <div class="row">
                     <div class="col-sm-offset-5 col-sm-10">
-                      <input type="hidden" name="submitted" value="true">
+                      <input type="hidden" name="deals-submit" value="true">
                         <button type="submit" data-toggle="tooltip" data-placement="right" title="Search Hotels" class="btn btn-primary">Search Deals</button>
                     </div>
                   </div>

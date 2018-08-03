@@ -3,9 +3,6 @@
 	$id = $_GET['tripid'];
 	
 	$tripRecord = $_SESSION["tripRecord" . $id];
-	//$tripRecord = $_SESSION["idarray[$id]"];
-	//echo sizeof ($_SESSION["idarray"]);
-	//echo $_SESSION["idarray[$id]"];
 	if(isset($_POST['feedback-submit']))
 {
 	$user = $_POST['username'];
