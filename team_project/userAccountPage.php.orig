@@ -263,15 +263,7 @@ echo "</tr>";
 		}
 		
 		else{ 
-<<<<<<< HEAD
-			$_SESSION['tripRecord'] = $tripRecord;
-||||||| merged common ancestors
-			$id = $tripRecord["trips_id"];
-			$_SESSION['tripRecord' . $id ] = $tripRecord;
-			$_SESSION['idarray[$trips_id]'] = $tripRecord;
-
-=======
->>>>>>> Ethan
+			
 			$tripid = $tripRecord["trips_id"];
 			$_SESSION['tripRecord' . $tripid] = $tripRecord;
 			echo "<td align = \"center\"><a href=\"feedback.php?tripid=$tripid\">leave feedback</a></td>";

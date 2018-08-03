@@ -12,7 +12,7 @@ if(isset($_POST['flight-status-submit']))
 	$flightnumber = $_POST['flightnumber'];
 	$airline = $_POST['airline'];
 	$deptdate = $_POST['departuredate'];
-	$stmt = "SELECT flight_status_id from flights, airlines where flight_no = $flightnumber and flights.airline_id = airlines.airline_id and airline_name = '$airline' and dept_date = '$deptdate';";
+	$stmt = "SELECT DISTINCT flight_status_id from flights, airlines where flight_no = $flightnumber and flights.airline_id = airlines.airline_id and airline_name = '$airline' and dept_date = '$deptdate';";
 	$query = mysqli_query($connect, $stmt);
 	if(mysqli_num_rows($query) > 0)
 	{

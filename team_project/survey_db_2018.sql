@@ -2,8 +2,8 @@
 -- version 4.8.2
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost
--- Generation Time: Aug 02, 2018 at 02:43 AM
+-- Host: 127.0.0.1
+-- Generation Time: Aug 03, 2018 at 08:30 PM
 -- Server version: 10.1.34-MariaDB
 -- PHP Version: 7.2.7
 
@@ -147,7 +147,8 @@ CREATE TABLE `deals` (
   `deal_id` int(10) NOT NULL,
   `hotel_avail_id` int(10) DEFAULT NULL,
   `flight_id` int(10) DEFAULT NULL,
-  `price` int(6) NOT NULL,
+  `deal_price` int(6) NOT NULL,
+  `deal_mileage` int(11) NOT NULL,
   `begin_date` date DEFAULT NULL,
   `end_date` date DEFAULT NULL,
   `total_days` int(11) NOT NULL,
@@ -159,9 +160,11 @@ CREATE TABLE `deals` (
 -- Dumping data for table `deals`
 --
 
-INSERT INTO `deals` (`deal_id`, `hotel_avail_id`, `flight_id`, `price`, `begin_date`, `end_date`, `total_days`, `dept_airport`, `arr_airport`) VALUES
-(1, 5, 4, 2000, '2018-08-01', '2018-10-31', 7, 'IAH', 'HNL'),
-(2, 1, 7, 600, '2018-10-01', '2018-12-31', 3, 'LAS', 'AUS');
+INSERT INTO `deals` (`deal_id`, `hotel_avail_id`, `flight_id`, `deal_price`, `deal_mileage`, `begin_date`, `end_date`, `total_days`, `dept_airport`, `arr_airport`) VALUES
+(1, 3, 13, 546, 17500, '2018-08-24', '2018-08-26', 3, 'AUS', 'LAS'),
+(2, 3, 14, 546, 17500, '2018-08-31', '2018-09-02', 3, 'AUS', 'LAS'),
+(3, 5, 2, 1295, 17500, '2018-09-21', '2018-10-01', 10, 'LAX', 'HNL'),
+(4, 6, 12, 2625, 35000, '2018-11-01', '2018-11-16', 15, 'AUS', 'LHR');
 
 -- --------------------------------------------------------
 
@@ -226,7 +229,9 @@ INSERT INTO `flights` (`flight_id`, `flight_no`, `airbus_id`, `route_desc`, `dep
 (9, 661, 767, '1 Stop. Houston to Las Angeles to Honolulu. Round Trip.', '2018-12-07', '2018-12-13', '09:00:00', '12:00:00', 24, 'economy', 1500, 25000, 'IAH', 'HNL', 7900, 2, 'on time'),
 (10, 231, 737, 'Nonstop. Las Vegas to Austin. Round Trip.', '2018-10-01', '2018-10-04', '15:06:00', '08:04:00', 6, 'economy', 500, 25000, 'LAS', 'AUS', 2800, 1, 'on time'),
 (11, 230, 737, 'Nonstop. Las Vegas to Austin. Round Trip.', '2018-11-12', '2018-11-15', '09:06:00', '17:04:00', 6, 'economy', 500, 25000, 'LAS', 'AUS', 2800, 4, 'on time'),
-(12, 230, 767, 'Nonstop. Austin to London. Round Trip.', '2018-11-01', '2018-11-16', '09:06:00', '17:04:00', 10, 'economy', 1000, 50000, 'AUS', 'LHR', 10000, 1, 'on time');
+(12, 230, 767, 'Nonstop. Austin to London. Round Trip.', '2018-11-01', '2018-11-16', '09:06:00', '17:04:00', 10, 'economy', 1000, 50000, 'AUS', 'LHR', 10000, 1, 'on time'),
+(13, 333, 737, 'Nonstop. Las Vegas to Austin. Round Trip.', '2018-08-24', '2018-08-26', '12:06:00', '17:04:00', 6, 'economy', 500, 25000, 'LAS', 'AUS', 2800, 4, 'on time'),
+(14, 334, 737, 'Nonstop. Las Vegas to Austin. Round Trip.', '2018-08-31', '2018-09-02', '12:06:00', '17:04:00', 6, 'economy', 500, 25000, 'LAS', 'AUS', 2800, 4, 'on time');
 
 -- --------------------------------------------------------
 
@@ -305,21 +310,23 @@ CREATE TABLE `hotels` (
   `name` varchar(20) NOT NULL,
   `address` varchar(50) NOT NULL,
   `phone` varchar(12) NOT NULL,
-  `capacity` int(5) NOT NULL
+  `capacity` int(5) NOT NULL,
+  `star` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `hotels`
 --
 
-INSERT INTO `hotels` (`hotel_id`, `name`, `address`, `phone`, `capacity`) VALUES
-(1, 'Holiday Inn', 'Austin, TX', '512-123-4567', 500),
-(2, 'Hilton', 'Houston, TX', '713-724-5555', 600),
-(3, 'Mandalay Bay', 'Las Vegas, NV', '702-565-9871', 1000),
-(4, 'MGM Grand', 'Las Vegas, NV', '702-336-2541', 1200),
-(5, 'Motel 6', 'Tampa, FL', '813-623-6987', 250),
-(6, 'W', 'Los Angeles, CA', '213-952-6541', 450),
-(7, 'Best Western', 'Honolulu, HI', '965-321-5422', 550);
+INSERT INTO `hotels` (`hotel_id`, `name`, `address`, `phone`, `capacity`, `star`) VALUES
+(1, 'Holiday Inn', 'Austin, TX', '512-123-4567', 500, 3),
+(2, 'Hilton', 'Houston, TX', '713-724-5555', 600, 3),
+(3, 'Mandalay Bay', 'Las Vegas, NV', '702-565-9871', 1000, 4),
+(4, 'MGM Grand', 'Las Vegas, NV', '702-336-2541', 1200, 4),
+(5, 'Motel 6', 'Tampa, FL', '813-623-6987', 250, 2),
+(6, 'W', 'Los Angeles, CA', '213-952-6541', 450, 4),
+(7, 'Best Western', 'Honolulu, HI', '965-321-5422', 550, 3),
+(8, 'Marriott of London', 'London, England', '442071231234', 450, 4);
 
 -- --------------------------------------------------------
 
@@ -343,7 +350,8 @@ INSERT INTO `hotel_availibility` (`hotel_avail_id`, `hotel_id`, `room_id`, `pric
 (2, 2, '1-King', 150),
 (3, 3, '2-Full', 140),
 (4, 4, '1-Queen', 125),
-(5, 7, '1-Queen', 225);
+(5, 7, '1-Queen', 225),
+(6, 8, '1-King', 250);
 
 -- --------------------------------------------------------
 
@@ -643,19 +651,19 @@ ALTER TABLE `airlines`
 -- AUTO_INCREMENT for table `deals`
 --
 ALTER TABLE `deals`
-  MODIFY `deal_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `deal_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `feedback`
 --
 ALTER TABLE `feedback`
-  MODIFY `feedback_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `feedback_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `flights`
 --
 ALTER TABLE `flights`
-  MODIFY `flight_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `flight_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `flight_booking`
@@ -673,13 +681,13 @@ ALTER TABLE `flight_transacations`
 -- AUTO_INCREMENT for table `hotels`
 --
 ALTER TABLE `hotels`
-  MODIFY `hotel_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `hotel_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `hotel_availibility`
 --
 ALTER TABLE `hotel_availibility`
-  MODIFY `hotel_avail_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `hotel_avail_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `hotel_bookings`
