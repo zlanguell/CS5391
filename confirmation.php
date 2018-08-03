@@ -25,6 +25,120 @@
 	$sql = "SELECT * FROM users WHERE user_id = '$uName'";
 	$result = mysqli_query($conn, $sql);
 	$accInfo = $result->fetch_array(MYSQLI_ASSOC);
+	if(isset($_POST["Submit"])){		
+		if(isset($_POST["hotel_name"])){		
+			//LOAD HOTEL INFO INTO DATABASE
+			$sql = "INSERT INTO hotel_transactions ( user_id, creditcard, amount)
+				VALUES('$uName', '$creditcard', '$total')";
+			if (mysqli_query($conn, $sql) === TRUE) {
+				$last_id = $conn->insert_id;
+				echo "hotel_transactions table updated successfully";
+			} else {
+				echo "Error inserting hotel transaction: " . $conn->error;
+			}
+			
+			$sql = "INSERT INTO hotel_bookings ( htrans_id, check_in, check_out, hotel_id)
+				VALUES('$last_id', '$check_in', '$check_out', '$hotel_id')";				
+			if (mysqli_query($conn, $sql) === TRUE) {
+				$last_id = $conn->insert_id;
+				echo "hotel_bookings table updated successfully";
+			} else {
+				echo "Error updating hotel_bookings: " . $conn->error;
+			}
+			
+			$num = $_POST["num_rooms"];
+			$sql = "INSERT INTO trips ( hbook_id, user_id, num_travelers)
+				VALUES('$last_id', '$uName', '$num')";				
+			if (mysqli_query($conn, $sql) === TRUE) {
+				$last_id = $conn->insert_id;
+				echo "trips table insert successfully";
+			} else {
+				echo "Error updating trips: " . $conn->error;
+			}
+			$tripRecordUpdated = $last_id;
+		}
+		
+		//UPDATE FLIGHT DATABASE INFO
+		if(isset($_POST["airline"])){
+			
+			//INSERT INTO FLIGHT_TRANSACTIONS
+			$sql = "INSERT INTO flight_transactions ( user_id, creditcard, amount)
+				VALUES('$uName', '$creditcard', '$total')";
+			if (mysqli_query($conn, $sql) === TRUE) {
+				$last_id = $conn->insert_id;
+				echo "flight_transactions table updated successfully";
+			} else {
+				echo "Error inserting flight transaction: " . $conn->error;
+			}
+			
+			//UPDATE FLIGHT BOOKINGS TABLE
+			$sql = "INSERT INTO flight_bookings ( trans_id, flight_id)
+				VALUES('$last_id', '$flight_id')";				
+			if (mysqli_query($conn, $sql) === TRUE) {
+				$last_id = $conn->insert_id;
+				echo "flight_bookings table updated successfully";
+			} else {
+				echo "Error updating flight_bookings: " . $conn->error;
+			}
+			
+			//UPDATE TRIPS TABLE IF HOTEL, INSERT IF NO HOTEL
+			if(isset($_POST["hotel_name"])){ //HOTEL CREATED TRIP, UPDATE TRIP
+				$sql = "UPDATE trips SET fbook_id='$last_id' WHERE trips_id = '$tripRecordUpdated'";								
+				if (mysqli_query($conn, $sql) === TRUE) {
+					$last_id = $conn->insert_id;
+					echo "trips table update successfully";
+				} else {
+					echo "Error updating trips: " . $conn->error;
+				}
+			}
+			else{ // NO HOTEL MUST INSERT
+				$num = $_POST["num_travelers"];
+				$sql = "INSERT INTO trips ( fbook_id, user_id, num_travelers)
+					VALUES('$last_id', '$uName', '$num')";				
+				if (mysqli_query($conn, $sql) === TRUE) {
+					$last_id = $conn->insert_id;
+					echo "trips table insert successfully";
+				} else {
+					echo "Error updating trips: " . $conn->error;
+				}
+			}
+			
+			//UPDATE USER MILEAGE IN USERS TABLE
+			$sql = "UPDATE users SET mileage='$userMileage' WHERE user_id='$uName'";
+			if (mysqli_query($conn, $sql) === TRUE) {
+					$last_id = $conn->insert_id;
+					echo "users table updated successfully";
+			} else {
+				echo "Error updating users: " . $conn->error;
+			}
+			
+			//UPDATE SEATS_AVAIL TABLE
+			$flightID = '$_POST["flight_id"]';
+			$sql = "SELECT * FROM seats_avail WHERE flight_id = $flightID";
+			$seatsRecord = mysqli_query($conn, $sql);
+			$seats = $seatsRecord->fetch_array(MYSQLI_ASSOC);
+			if($_POST["cabin_type"]== "economy"){
+				$currentSeats = $seats["eco_seats_remaining"];
+				$newSeats = $currentSeats - $_POST["num_travelers"];
+				$sql = "UPDATE seats_avail SET eco_seats_remaining='$newSeats' WHERE flight_id='$flightID'";				
+			}
+			else{
+				$currentSeats = $seats["first_seats_remaining"];
+				$newSeats = $currentSeats - $_POST["num_travelers"];
+				$sql = "UPDATE seats_avail SET first_seats_remaining='$newSeats' WHERE flight_id='$flightID'";				
+			}
+			if (mysqli_query($conn, $sql) === TRUE) {
+					$last_id = $conn->insert_id;
+					echo "seats_avail table updated successfully";
+				} else {
+					echo "Error updating seats_avail: " . $conn->error;
+				}
+		}
+		
+		$conn->close();	
+		//$_SESSION["trips_Record"] = array("trips_id"=>'$tripRecordUpdated');
+		echo '<meta http-equiv="refresh" content="0;URL=feedback.php" />';
+	}	
 	
 ?>
 <html>
@@ -178,7 +292,43 @@
 							echo '</table>';
 							echo '<br><br>';
 						}
-					?>			
+					?>
+					<?php
+						echo '<br><br>';
+						echo '<table border="1" bordercolor="ffffff" height = "120" color = "white">';
+						echo '<tbody>';							
+							echo "<tr>";
+								if($flightRecord){
+									echo '<td align = "center" style="color: white;"><strong> Airline Cost </strong></td>';
+								}
+								if($hotelRecord){
+									echo '<td align = "center" style="color: white;"><strong> Hotel Cost </strong></td>';
+								}									
+								echo '<td align = "center" style="color: white;"><strong> Tax + Fees </strong></td>';
+								echo '<td align = "center" style="color: white;"><strong> Total </strong></td>';	
+							echo "</tr>";
+							
+							echo "<tr>";
+								$totalFlight = 0;
+								$totalHotel = 0;
+								if($flightRecord){
+									$totalFlight = $flightRecord["num_travelers"] * $flightRecord["fare_dollars"];
+									echo '<td align = "center" style="color: white;">' . "$" . $totalFlight . '</td>';
+								}									
+								if($hotelRecord){
+									$totalHotel = $hotelRecord["num_rooms"] * $hotelRecord["price"];
+									echo '<td align = "center" style="color: white;">' . "$" . $totalHotel . '</td>';
+								}
+								$taxTotal = ($totalFlight + $totalHotel)*0.15;
+								echo '<td align = "center" style="color: white;">' . "$" . $taxTotal . '</td>';
+								$total = $taxTotal + $totalHotel +$totalFlight;
+								echo '<td align = "center" style="color: white;">' . "$" . $total . '</td>';
+							echo "</tr>";
+							
+						echo '</tbody>';
+						echo '<table>';
+					?>
+								
 					<br>
 					<form name="confirmation" action="confirmation.php" onsubmit="return validate()" method="post">					
 						<br>
@@ -202,49 +352,11 @@
 								$counter--;
 							}														
 						?>
-						</fieldset>
-						<br><br>
-					<label for="Total" class="control-label padding-top-10">Total:</label>
-					<div class="row padding-top-10">
-						<div class="col-md-6">
-							<table border="1" bordercolor="ffffff" height = "120" color = "white">
-							<tbody>
-							<?php
-								echo "<tr>";
-									if($flightRecord){
-										echo '<td align = "center" style="color: white;"><strong>Airline Cost</strong></td>';
-									}
-									if($hotelRecord){
-										echo '<td align = "center" style="color: white;"><strong>Hotel Cost</strong></td>';
-									}									
-									echo '<td align = "center" style="color: white;"><strong>Tax + Fees</strong></td>';
-									echo '<td align = "center" style="color: white;"><strong>Total</strong></td>';	
-								echo "</tr>";
-								echo "<tr>";
-									$totalFlight = 0;
-									$totalHotel = 0;
-									if($flightRecord){
-										$totalFlight = $flightRecord["num_travelers"] * $flightRecord["fare_dollars"];
-										echo '<td align = "center" style="color: white;">' . "$" . $totalFlight . '</td>';
-									}									
-									if($hotelRecord){
-										$totalHotel = $hotelRecord["num_rooms"] * $hotelRecord["price"];
-										echo '<td align = "center" style="color: white;">' . "$" . $totalHotel . '</td>';
-									}
-									$taxTotal = ($totalFlight + $totalHotel)*0.15;
-									echo '<td align = "center" style="color: white;">' . "$" . $taxTotal . '</td>';
-									$total = $taxTotal + $totalHotel +$totalFlight;
-									echo '<td align = "center" style="color: white;">' . "$" . $total . '</td>';
-								echo "</tr>";
-							?>
-							</tbody>
-							<table>
-						</div>
-					</div>
-			<br><br>
+						</fieldset>				
+			
 			<div class="row padding-top-10">
 				<div class="col-sm-offset-5 col-sm-10">
-					<button type="submit" data-toggle="tooltip" data-placement="right" title="Confirm" class="btn btn-primary">CONFIRM</button>					
+					<button type="Submit" data-toggle="tooltip" name="Submit" data-placement="right" title="Submit" class="btn btn-primary">CONFIRM</button>					
 				</div>				
 			</div>				
 		</form>
@@ -252,6 +364,7 @@
 	</div>
 </div>
 </div>
-  <?php echo get_footer();?>
+
 </body>
 </html>
+<?php echo get_footer();?>
