@@ -74,7 +74,7 @@ body {
 }
 </style>
 
-</head>
+
 <body>
   <?php echo(get_header());?>
 
@@ -94,9 +94,9 @@ body {
             <div class="panel panel-default home-panel">
               <div class="panel-body">
                 <div class="page-header" style="margin-top:5px;">
-                  <center><b><font id="formhead">SEARCH FOR A FLIGHT</font></b><i class="fa fa-plane fa-3x" style="margin-left: 20px"></i><center>
+                    <center><b><font id="formhead">SEARCH FOR A FLIGHT</font></b><i class="fa fa-plane fa-3x" style="margin-left: 20px"></i></center>
                 </div>
-                <form class="form-inline" name="myform" id="myform" method="post" action="flight-results.php">
+                <form class="form-inline" name="myform" id="myform" method="post" action="flightsearch.php">
                   <div class="row">
                     <div class="col-md-2">
                       <div class="form-group">
@@ -245,7 +245,7 @@ body {
                       </div>
                     </div>
                   </div>
-                  </br>
+                  
                   <div class="row">
                     <div class=" col-md-3">
                       <div class="form-group">
@@ -333,7 +333,7 @@ body {
                         <button type="submit" data-toggle="tooltip" data-placement="right" title="Search Hotels" class="btn btn-primary">Search Flight + Hotel</button>
                     </div>
                   </div>
-                </form>
+                
               </div>
             </div>
           </div>
@@ -520,6 +520,8 @@ body {
     </div>
   </div>
 </div>
-  <?php echo get_footer();?>
+  <?php 
+      echo get_footer();
+      ?>
 </body>
 </html> 
