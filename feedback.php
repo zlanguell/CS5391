@@ -1,12 +1,40 @@
 <?php
 	session_start();
 	include 'utility.php';
-	
-	
 	$tripRecord = $_SESSION["tripRecord"];
-	
-	
+	//$uName = $_SESSION['user'];
+	$uName = 'JKFen';
+	if(isset($_POST["Submit"])){
+		$conn = mysqli_connect("localhost","root","","survey_db_2018");
+		if (mysqli_connect_errno()) {
+				die('Could not connect: ' . mysqli_connect_error());
+		}
+		$newRating = $_POST['rating'];
+		$newComments = $_POST['comments'];
+		$tripID = $tripRecord["trips_id"];		
+		//mysql_select_db($dbname,$conn);
+		$sql = "INSERT INTO feedback ( rating, comments, user_id, trips_id)
+				VALUES('$newRating', '$newComments', '$uName', '$tripID')";
+		if (mysqli_query($conn, $sql) === TRUE) {
+			$last_id = $conn->insert_id;
+			echo "Feedback table updated successfully";
+		} else {
+			echo "Error recording feedback: " . $conn->error;
+		}
+		
+		
+		$sql = "UPDATE trips SET feedback_id='$last_id' WHERE trips_id = '$tripID'";
+		if (mysqli_query($conn, $sql) === TRUE) {			
+			echo "User table updated successfully";
+		} else {
+			echo "Error updating user: " . $conn->error;
+		}
+		
+		$conn->close();	
+		echo '<meta http-equiv="refresh" content="0;URL=userAccountPage.php" />';
+	}	
 ?>
+
 <html>
 	<head>
   	<title>TravelCo</title>
@@ -167,7 +195,7 @@
 			<br><br>
 			<div class="row padding-top-10">
 				<div class="col-sm-offset-5 col-sm-10">
-					<button type="submit" data-toggle="tooltip" data-placement="right" title="Submit" class="btn btn-primary">SUBMIT</button>					
+					<button type="Submit" data-toggle="tooltip" data-placement="right" title="Submit" name = "Submit" class="btn btn-primary">SUBMIT</button>					
 				</div>				
 			</div>				
 		</form>
