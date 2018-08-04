@@ -14,7 +14,7 @@ if(isset($_POST['selected-deal']))
 
 		//pass deal array row to session variable for confirmation
 		$_SESSION['passDeals'] = $selectedDeal[$dealNum];
-		print_r($_SESSION['passDeals']);
+		//print_r($_SESSION['passDeals']);
 	}
 	else
 		echo "Deal not selected!!!!!!!!!!!!!!!!!";
@@ -23,43 +23,50 @@ if(isset($_POST['deals-submit']))
 {
 
 	$connect = mysqli_connect("localhost","root","","survey_db_2018") or die('Error Connecting To Databse');
+
+	//get form data
 	$sourceCity = $_POST['source'];
 	$destCity = $_POST['destination'];
 	$startingdate = $_POST['starting-date'];
 	$endingdate = $_POST['ending-date'];
-	$guests = $_POST['guests'];
+	//$guests = $_POST['guests'];
 	$rooms = $_POST['rooms'];
 	$lowrange = $_POST['low'];
 	$highrange = $_POST['high'];
+	$travelers = $_POST['travelers'];
+	$rooms = $_POST['rooms'];
 	$sourceAirport;
 	$destAirport;
 
+	//Query to convert Source City to Airport ID
 	$stmtSource = "SELECT airport_id from airport_detail where city='$sourceCity'";
 	$sourceQuery = mysqli_query($connect, $stmtSource);
 	if(mysqli_num_rows($sourceQuery) > 0){
 		$row = $sourceQuery->fetch_array(MYSQLI_ASSOC);
 		$sourceAirport = $row['airport_id'];
-		echo $sourceAirport;
 	}
 
+	//Query to convert Destination City to Airport ID
 	$stmtDest = "SELECT airport_id from airport_detail where city='$destCity'";
 	$destQuery = mysqli_query($connect, $stmtDest);
 	if(mysqli_num_rows($destQuery) > 0){
 		$row = $destQuery->fetch_array(MYSQLI_ASSOC);
 		$destAirport = $row['airport_id'];
-		echo $destAirport;
 	}
 
-	echo $sourceCity . " " . $destCity . " " . $startingdate . " " . $endingdate . " " . $guests . " " . $rooms . " " . $lowrange . " " . $highrange . " ";
+	//echo $sourceCity . " " . $destCity . " " . $startingdate . " " . $endingdate . " " . $guests . " " . $rooms . " " . $lowrange . " " . $highrange . " ";
 
+	//Main Query to select trip details
 	$stmt = "SELECT * FROM deals, hotel_availibility, hotels, flights, airlines, rooms WHERE deals.deal_price >= '$lowrange' and deals.deal_price <= '$highrange' and begin_date >= '$startingdate' and end_date <= '$endingdate' and deals.hotel_avail_id = hotel_availibility.hotel_avail_id and hotels.hotel_id = hotel_availibility.hotel_id and deals.arr_airport = '$destAirport' and deals.dept_airport = '$sourceAirport' and flights.flight_id=deals.flight_id and flights.airline_id = airlines.airline_id and rooms.room_id = hotel_availibility.room_id";
 	$query = mysqli_query($connect, $stmt);
 
+	//array to store all deals that are created
 	$deals = array();
-	if(mysqli_num_rows($query) > 0)
+
+	if(mysqli_num_rows($query) > 0) //if query returns rows
 	{
-		while($row = $query->fetch_array(MYSQLI_ASSOC)){
-		print_r($row);
+		while($row = $query->fetch_array(MYSQLI_ASSOC)){ //loop through query rows and store deal information in array
+		//print_r($row);
 		$record = array(
 			"flight_no"=>$row['flight_no'],
 			"airline_name" => $row['airline_name'],
@@ -70,6 +77,7 @@ if(isset($_POST['deals-submit']))
 			"return_date" => $row['return_date'],
 			"return_dept_time" => $row['return_dept_time'],
 			"cabin_type" => $row['cabin_type'],
+			"travelers" => $travelers,
 			"hotel_name" => $row['name'],
 			"room_id" => $row['room_id'],
 			"hotel_address"=> $row['address'],
@@ -77,43 +85,15 @@ if(isset($_POST['deals-submit']))
 			"check_out" => $row['return_date'],
 			"deal_price" => $row['deal_price'],
 			"deal_mileage" => $row['deal_mileage'],
-			"star" => $row['star']
+			"star" => $row['star'],
+			"rooms" => $rooms
 			);
-		array_push($deals, $record);
+		array_push($deals, $record); //push deal info array to storage array (2D array now)
 	}
+	//store deal array just incase user submits form without selecting deal
 	$_SESSION["deals"]= $deals;
-	//echo "Deal count = " . sizeof($deals);
-		//$flightstatus = $row["flight_status_id"];
-// 		$dealresults = <<<HTML
-// 		<html>
-// 			<body>
-// 			<label><input type="radio" id='express' name="optradio" value="1">Deal-1</label>
-// 			<div style="overflow-x:auto;">
-// 				<table border="3" height="120" class="table table-responsive">
-// 					<tbody>
-// 						<tr>
-// 							<td align = "center" style="color: white;"><strong>Flight Number</strong></td>
-// 							<td align = "center" style="color: white;"><strong>Airline</strong></td>
-// 							<td align = "center" style="color: white;"><strong>Departure Date</strong></td>
-// 							<td align = "center" style="color: white;"><strong>Return Date</strong></td>
-// 							<td align = "center" style="color: white;"><strong>Source</strong></td>
-// 							<td align = "center" style="color: white;"><strong>Destination</strong></td>
-// 							<td align = "center" style="color: white;"><strong>Flight Type</strong></td>
-// 							<td align = "center" style="color: white;"><strong>Dept Time</strong></td>
-// 							<td align = "center" style="color: white;"><strong>Return Time</strong></td>
-// 							<td align = "center" style="color: white;"><strong>Cabin</strong></td>
-// 						</tr>
-
-// 					</tbody>
-// 				</table>
-// 				</div>
-// 				<br><br>
-// 			</body>
-// 		</html>
-
-// HTML;
 	}
-		else
+		else //No deals found
 		{
 			echo '<script language="javascript">';
 			echo'alert("No Deals Found!")';
@@ -169,6 +149,8 @@ if(isset($_POST['deals-submit']))
 			</div>
 			<div class="panel body">
 				<form name="dealResults" action="<?php echo $_SERVER['PHP_SELF']; ?>" onsubmit="return validate()" method="post">
+					<span>Prices shown are per person.</span>
+					<br>
 					<br>
 					<div class="row padding-top-10">
 						<div class="col-md-12"  style="overflow-x:auto;"">
@@ -188,20 +170,22 @@ if(isset($_POST['deals-submit']))
 									echo	"<td align = \"center\" style=\"color: white;\"><strong>Destination</strong></td>";
 									echo	"<td align = \"center\" style=\"color: white;\"><strong>Dept Date</strong></td>";
 									echo	"<td align = \"center\" style=\"color: white;\"><strong>Dept Time</strong></td>";
-									echo  "<td align = \"center\" style=\"color: white;\"><strong>Return Date</strong></td>";
+									echo  	"<td align = \"center\" style=\"color: white;\"><strong>Return Date</strong></td>";
 									echo	"<td align = \"center\" style=\"color: white;\"><strong>Return Time</strong></td>";
 									echo	"<td align = \"center\" style=\"color: white;\"><strong>Cabin</strong></td>";
+									echo	"<td align = \"center\" style=\"color: white;\"><strong>Number of Travelers</strong></td>";
 									echo	"</tr>";
 									echo "<tr>"; 
-									echo "<td align = \"center\" style=\"color: white;\">" . $dealRecord['flight_no'] . "</td>"; 		/*<!-- Trip Number   	-->*/
-									echo "<td align = \"center\" style=\"color: white;\">" . $dealRecord['airline_name'] . "</td>"; 	/*<!-- Number Travelers	-->*/
-									echo "<td align = \"center\" style=\"color: white;\">" . $dealRecord['dept_airport'] . "</td>"; 		/*<!-- Hotel Name    	-->*/
-									echo "<td align = \"center\" style=\"color: white;\">" . $dealRecord['arr_airport'] . "</td>"; 	/*<!-- Hotel Check-in      -->*/
-									echo "<td align = \"center\" style=\"color: white;\">" . $dealRecord['dept_date'] . "</td>"; /*<!-- Hotel Check-out   -->*/
-									echo "<td align = \"center\" style=\"color: white;\">" . $dealRecord['dept_time'] . "</td>"; 	/*<!-- Airline Name    -->*/
-									echo "<td align = \"center\" style=\"color: white;\">" . $dealRecord['return_date'] . "</td>"; 	/*<!-- Departure Airport -->*/
-									echo "<td align = \"center\" style=\"color: white;\">" . $dealRecord['return_dept_time'] . "</td>"; 		/*<!-- Departure Date/Time  -->*/
-									echo "<td align = \"center\" style=\"color: white;\">" . $dealRecord['cabin_type'] . "</td>"; 									/*<!-- Arrival Airport   -->*/
+									echo "<td align = \"center\" style=\"color: white;\">" . $dealRecord['flight_no'] . "</td>"; 		//FLight Number   	
+									echo "<td align = \"center\" style=\"color: white;\">" . $dealRecord['airline_name'] . "</td>"; 	//Airline	
+									echo "<td align = \"center\" style=\"color: white;\">" . $dealRecord['dept_airport'] . "</td>"; 	//Deptarting Airport 
+									echo "<td align = \"center\" style=\"color: white;\">" . $dealRecord['arr_airport'] . "</td>"; 		//Arrival Airport
+									echo "<td align = \"center\" style=\"color: white;\">" . $dealRecord['dept_date'] . "</td>"; 		//Departure Date  
+									echo "<td align = \"center\" style=\"color: white;\">" . $dealRecord['dept_time'] . "</td>"; 		//Departure Time
+									echo "<td align = \"center\" style=\"color: white;\">" . $dealRecord['return_date'] . "</td>"; 		//Return Date
+									echo "<td align = \"center\" style=\"color: white;\">" . $dealRecord['return_dept_time'] . "</td>"; //Return Time
+									echo "<td align = \"center\" style=\"color: white;\">" . $dealRecord['cabin_type'] . "</td>"; 		//Cabit Type
+									echo "<td align = \"center\" style=\"color: white;\">" . $dealRecord['travelers'] . "</td>";		//Number of Travelers
 									echo "</tr>";
 									echo "<tr></tr>";
 									echo "</table>";
@@ -217,14 +201,16 @@ if(isset($_POST['deals-submit']))
 									echo	"<td align = \"center\" style=\"color: white;\"><strong>Check-In</strong></td>";
 									echo	"<td align = \"center\" style=\"color: white;\"><strong>Check-Out</strong></td>";
 									echo	"<td align = \"center\" style=\"color: white;\"><strong>Star Rating</strong></td>";
+									echo	"<td align = \"center\" style=\"color: white;\"><strong>Number of Rooms</strong></td>";
 									echo	"</tr>";
 									echo "<tr>"; 
-									echo "<td align = \"center\" style=\"color: white;\">" . $dealRecord['hotel_name'] . "</td>"; 		
-									echo "<td align = \"center\" style=\"color: white;\">" . $dealRecord['room_id'] . "</td>"; 								
-									echo "<td align = \"center\" style=\"color: white;\">" . $dealRecord['hotel_address'] . "</td>"; 	
-									echo "<td align = \"center\" style=\"color: white;\">" . $dealRecord['dept_date'] . "</td>"; 
-									echo "<td align = \"center\" style=\"color: white;\">" . $dealRecord['return_date'] . "</td>";
-									echo "<td align = \"center\" style=\"color: white;\">" . $dealRecord['star'] . "</td>";
+									echo "<td align = \"center\" style=\"color: white;\">" . $dealRecord['hotel_name'] . "</td>"; 		//Hotel Name
+									echo "<td align = \"center\" style=\"color: white;\">" . $dealRecord['room_id'] . "</td>"; 			//Room Type					
+									echo "<td align = \"center\" style=\"color: white;\">" . $dealRecord['hotel_address'] . "</td>"; 	//Location
+									echo "<td align = \"center\" style=\"color: white;\">" . $dealRecord['dept_date'] . "</td>"; 		//Check-Out
+									echo "<td align = \"center\" style=\"color: white;\">" . $dealRecord['return_date'] . "</td>";		//Check-In
+									echo "<td align = \"center\" style=\"color: white;\">" . $dealRecord['star'] . "</td>";				//Star Rating
+									echo "<td align = \"center\" style=\"color: white;\">" . $dealRecord['rooms'] . "</td>";			//Number of Rooms
 									echo "</tr>";
 									echo "<tr></tr>";
 									echo "</table>";

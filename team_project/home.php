@@ -409,8 +409,8 @@
                   <div class="row">
                     <div class="col-md-2">
                       <div class="form-group">
-                        <label for="At">Number of Guests</label>
-                       <input type="number" id="guests" name="guests" step="any" value="0" style="color: black;"> 
+                        <label for="At">Number of Travelers</label>
+                       <input type="number" id="travelers" name="travelers" step="any" value="0" style="color: black;"> 
                       </div>
                     </div>
                     <div class="col-sm-offset-1 col-md-2">
