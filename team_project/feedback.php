@@ -1,16 +1,48 @@
 <?php
 	include 'utility.php';
-	$id = $_GET['tripid'];
-	
-	$tripRecord = $_SESSION["tripRecord" . $id];
-	if(isset($_POST['feedback-submit']))
-{
-	$user = $_POST['username'];
-	$pass = $_POST['password'];
-}
-	
-	
+	$id;
+
+	if(isset($_SESSION['user'])){
+		$uName = $_SESSION['user'];
+		//echo $uName . "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!";
+		$id = $_GET['tripid'];
+		$tripRecord = $_SESSION["tripRecord" . $id];
+
+		if(isset($_POST["Submit"])){
+			$conn = mysqli_connect("localhost","root","","survey_db_2018");
+			if (mysqli_connect_errno()) {
+					die('Could not connect: ' . mysqli_connect_error());
+			}
+			$newRating = $_POST['rating'];
+			$newComments = $_POST['comments'];
+			$tripID = $tripRecord["trips_id"];	
+			//mysql_select_db($dbname,$conn);
+			$sql = "INSERT INTO feedback ( rating, comments, user_id, trips_id)
+					VALUES('$newRating', '$newComments', '$uName', '$tripID')";
+			if (mysqli_query($conn, $sql) === TRUE) {
+				$last_id = $conn->insert_id;
+				//echo "Feedback table updated successfully";
+			} else {
+				echo "Error recording feedback: " . $conn->error;
+			}
+			
+			
+			$sql = "UPDATE trips SET feedback_id='$last_id' WHERE trips_id = '$tripID'";
+			if (mysqli_query($conn, $sql) === TRUE) {			
+				//echo "User table updated successfully";
+			} else {
+				echo "Error updating user: " . $conn->error;
+			}
+			
+			$conn->close();	
+			echo '<meta http-equiv="refresh" content="0;URL=userAccountPage.php" />';
+		}	
+	}
+
+	else
+		header('Location: login.php');
 ?>
+
 <html>
 	<head>
   	<title>TravelCo</title>
@@ -136,7 +168,7 @@
 				</tbody>
 				</table>
 				<br><br><br>
-				<form name="feedback" action="feedback.php" onsubmit="return validate()" method="post">					
+				<form name="feedback" action="feedback.php?tripid=<?php echo $id?>" onsubmit="return validate()" method="post">					
 					<br>
 						<fieldset class="rating">
 						<legend>Please rate:</legend>					
@@ -170,9 +202,8 @@
 					</div>
 			<br><br>
 			<div class="row padding-top-10">
-				<input type="hidden" name="feedback-submit" value="true">
 				<div class="col-sm-offset-5 col-sm-10">
-					<button type="submit" data-toggle="tooltip" data-placement="right" title="Submit" class="btn btn-primary">SUBMIT</button>					
+					<button type="Submit" data-toggle="tooltip" data-placement="right" title="Submit" name = "Submit" class="btn btn-primary">SUBMIT</button>					
 				</div>				
 			</div>				
 		</form>
