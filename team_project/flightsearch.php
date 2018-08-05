@@ -42,7 +42,7 @@
     $class = $_POST['class'];
     echo "class: " . $class;
 
-    session_start();
+   // session_start();
     $_SESSION['sessionvar'] = $travelers;
     
     //echo $maker, $maker1;
@@ -77,7 +77,7 @@
           $airportDestQuery = (mysqli_query($connect,"SELECT airport_id from airport_detail where city = '$destination'"));
           $count = mysqli_num_rows($airportDestQuery); 
           //$row = 0;
-          echo "airline source query retured:" . $count;
+          //echo "\nairline source query retured:" . $count;
           if($count > 0){
             $row = mysqli_fetch_array($airportDestQuery);
           }   
@@ -95,21 +95,21 @@
           }
           
           else {
-
+            echo "Row Count = " . $count;
             $flights = array();
 
               //$row = mysqli_fetch_array($query)
               while($row = $query->fetch_array(MYSQLI_ASSOC)) {
-                //print_r($row);
                 $record = array(
-                  $from1 = $row['dept_airport'],
-                  $to1 = $row['arr_airport'],
-                  $flight_id = $row['flight_id'],
-                  $depart_date = $row['dept_date'],
-                  $return_date = $row['return_date'],
-                  $fare = $row['fare_dollars'],
-                  $time = $row['journey_hr'],
-                  $dist = $row['distance']
+                  "dept_airport" => $row['dept_airport'],
+                  "arr_airport" => $row['arr_airport'],
+                  "flight_id" => $row['flight_id'],
+                  "dept_date" => $row['dept_date'],
+                  "return_date" => $row['return_date'],
+                  "fare_dollars" => $row['fare_dollars'],
+                  "fare_mileage" => $row['fare_mileage'],
+                  "journey_hr" => $row['journey_hr'],
+                  "distance" => $row['distance']
                 );
 
                 array_push($flights, $record);
@@ -227,7 +227,7 @@ body {
                   //Flight Display-----------------------------------------------------------------------------
                   echo "<table border=\"3\" height = \"120\">";
                   echo "<label style='font-size:20px;'><input type=\"radio\" id='flight' name='flight' style='margin-right: 5px;' value='$flightCount'>Flight-$flightCount </label>"; 
-                  echo "<span style='margin-left: 20px;'>" . "<strong><span style='color:red; font-size:20px;'>Flight Price: $" . $flightRecord['fare_dollars'] ."<span style='margin-left:20px'>" . "</strong></span></span></span>";
+                  echo "<span style='margin-left: 20px;'>" . "<strong><span style='color:red; font-size:20px;'>Price: $" . $flightRecord['fare_dollars'] ."<span style='margin-left:20px'>" . "Mileage Price: ". $flightRecord['fare_mileage'] . "</strong></span></span></span>";
                   echo "<tbody>";
                   echo "<tr>";
                   echo  "<td align = \"center\" style=\"color: white;\"><strong>Source</strong></td>";
@@ -236,8 +236,11 @@ body {
                   //echo  "<td align = \"center\" style=\"color: white;\"><strong>Dept Time</strong></td>";
                   echo  "<td align = \"center\" style=\"color: white;\"><strong>Return Date</strong></td>";
                   //echo  "<td align = \"center\" style=\"color: white;\"><strong>Return Time</strong></td>";
-                  echo  "<td align = \"center\" style=\"color: white;\"><strong>Journey Time</strong></td>";
-                  echo  "<td align = \"center\" style=\"color: white;\"><strong>Distance</strong></td>";
+                  echo  "<td align = \"center\" style=\"color: white;\"><strong>Journey Time (hrs)</strong></td>";
+                  echo  "<td align = \"center\" style=\"color: white;\"><strong>Distance (mi)</strong></td>";
+                  echo  "<td align = \"center\" style=\"color: white;\"><strong>Price</strong></td>";
+                  echo  "<td align = \"center\" style=\"color: white;\"><strong>Mileage Price</strong></td>";
+
                   echo  "</tr>";
                   echo "<tr>"; 
                   echo "<td align = \"center\" style=\"color: white;\">" . $flightRecord['dept_airport'] . "</td>";    /*<!-- Trip Number    -->*/
@@ -248,7 +251,9 @@ body {
                   //echo "<td align = \"center\" style=\"color: white;\">" . $dealRecord['dept_time'] . "</td>";  /*<!-- Airline Name    -->*/
                   //echo "<td align = \"center\" style=\"color: white;\">" . $dealRecord['return_date'] . "</td>";  /*<!-- Departure Airport -->*/
                   echo "<td align = \"center\" style=\"color: white;\">" . $flightRecord['journey_hr'] . "</td>";     /*<!-- Departure Date/Time  -->*/
-                  echo "<td align = \"center\" style=\"color: white;\">" . $flightRecord['distance'] . "</td>";                   /*<!-- Arrival Airport   -->*/
+                  echo "<td align = \"center\" style=\"color: white;\">" . $flightRecord['distance'] . "</td>";                  
+                  echo "<td align = \"center\" style=\"color: white;\">" . "$" . $flightRecord['fare_dollars'] . "</td>";                   
+                  echo "<td align = \"center\" style=\"color: white;\">" . $flightRecord['fare_mileage'] . "</td>";                   
                   echo "</tr>";
                   echo "<tr></tr>";
                   echo "</table>";
